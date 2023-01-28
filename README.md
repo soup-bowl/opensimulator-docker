@@ -11,7 +11,7 @@ Work in progress to contain the OpenSimulator server software in a Docker contai
 ```bash
 docker run -d \
   --name opensim \
-  --port 9000:9000 \
-  --port 9000:9000/udp \
+  -p 9000:9000 \
+  -p 9000:9000/udp \
   ghcr.io/soup-bowl/opensimulator-docker:edge
 ```
