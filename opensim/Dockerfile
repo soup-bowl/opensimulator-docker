@@ -1,5 +1,10 @@
 FROM docker.io/library/mono:latest
 
+LABEL org.opencontainers.image.title="OpenSimulator (unofficial)"
+LABEL org.opencontainers.image.authors="code@soupbowl.io"
+LABEL org.opencontainers.image.source="https://github.com/soup-bowl/opensimulator-docker"
+LABEL org.opencontainers.image.licenses="MIT"
+
 RUN curl -o /bin/wait-for-it https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh \
     && chmod +x /bin/wait-for-it
 
