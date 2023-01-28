@@ -21,4 +21,7 @@ EXPOSE 9000
 
 WORKDIR /opt/opensim/bin
 
-ENTRYPOINT [ "wait-for-it", "db:3306", "--", "mono",  "./OpenSim.exe" ]
+COPY docker-entrypoint.sh /usr/local/bin/
+
+ENTRYPOINT ["docker-entrypoint.sh"]
+CMD [ "mono",  "./OpenSim.exe" ]
