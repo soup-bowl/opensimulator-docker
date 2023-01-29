@@ -2,7 +2,7 @@
 
 From the [OpenSimulator][os] site:
 
-  OpenSimulator is an open source multi-platform, multi-user 3D application server. It can be used to create a virtual environment (or world) which can be accessed through a variety of clients, on multiple protocols.
+> OpenSimulator is an open source multi-platform, multi-user 3D application server. It can be used to create a virtual environment (or world) which can be accessed through a variety of clients, on multiple protocols.
 
 This **unofficial** Docker configuration aims to assist in setting the server up for testing and general purpose use.
 
@@ -11,15 +11,15 @@ This **unofficial** Docker configuration aims to assist in setting the server up
 ## Usage
 
 ```bash
-docker run -d --name opensim -p 9000:9000 -p 9000:9000/udp ghcr.io/soup-bowl/opensimulator-docker:edge
+docker run -d --name opensim -p 9000:9000 -p 9000:9000/udp soupbowl/opensimulator:edge
 ```
 
 You can change settings with the following optional environmental overrides:
 
-* `-e GRID_NAME=...` to define the name of your grid.
+* `-e GRID_NAME=...` to define the name of [your grid][grid].
 * `-e GRID_WELCOME=...` to show a custom message on the login screen.
-* `-e REGION_NAME=...` to define the Region name.
-* `-e ESTATE_NAME=...` to define the Estate name.
+* `-e REGION_NAME=...` to define the [Region][region] name.
+* `-e ESTATE_NAME=...` to define the [Estate][estate] name.
 * `-e ESTATE_OWNER_NAME=...` to set the estate owner name (and creates a login) - format of 'Firstname Lastname'.
 * `-e ESTATE_OWNER_PASSWORD=...` to define a login password.
 * `-e ESTATE_OWNER_UUID=...` for a custom UUID, if desired.
@@ -31,4 +31,7 @@ Once the server is running, you should be able to connect to it on `localhost:90
 
 If you don't define otherwise in the environments or a custom configuration, the login username is **Foo bar** and the password is **password**.
 
-[os]: https://opensimulator.org/
+[os]: http://opensimulator.org/wiki/Main_Page
+[grid]: https://wiki.secondlife.com/wiki/Land#Grid
+[estate]: https://wiki.secondlife.com/wiki/Land#Estate
+[region]: https://wiki.secondlife.com/wiki/Land#Region
