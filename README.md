@@ -31,6 +31,10 @@ Once the server is running, you should be able to connect to it on `localhost:90
 
 If you don't define otherwise in the environments or a custom configuration, the login username is **Foo bar** and the password is **password**.
 
+## Examples
+
+See [this repository](https://github.com/soup-bowl/opensim-sandbox) for some example usages of this image.
+
 [os]: http://opensimulator.org/wiki/Main_Page
 [grid]: https://wiki.secondlife.com/wiki/Land#Grid
 [estate]: https://wiki.secondlife.com/wiki/Land#Estate
