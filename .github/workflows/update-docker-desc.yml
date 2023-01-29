@@ -1,4 +1,4 @@
-name: Build Container
+name: Update DockerHub Description
 
 on:
   push:
