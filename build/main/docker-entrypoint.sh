@@ -57,6 +57,6 @@ if [ `find Regions -maxdepth 1 -name '*.ini' | wc -l` -eq 0 ]; then
     InternalPort = 9000
     AllowAlternatePorts = False
     ExternalHostName = localhost" >> Regions/Regions.ini
-fi 
+fi
 
 exec "$@"

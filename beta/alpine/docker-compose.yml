@@ -3,7 +3,7 @@ services:
   db:
     image: docker.io/library/mariadb:10.5
     volumes:
-    - "database_store:/var/lib/mysql"
+      - "database_store:/var/lib/mysql"
     environment:
       MYSQL_DATABASE: metaverse
       MYSQL_ROOT_PASSWORD: password
@@ -13,8 +13,8 @@ services:
     depends_on:
       - db
     ports:
-    - "9000:9000"
-    - "9000:9000/udp"
+      - "9000:9000"
+      - "9000:9000/udp"
     environment:
       DATABASE_ENGINE: mysql
       MYSQL_SERVER: db

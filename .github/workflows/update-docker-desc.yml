@@ -3,21 +3,21 @@ name: Update DockerHub Description
 on:
   push:
     branches:
-    - main
+      - main
     paths:
-    - "README.md"
+      - "README.md"
   workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout Codebase
-      uses: actions/checkout@v2
-    
-    - name: Docker Hub Description
-      uses: peter-evans/dockerhub-description@v3
-      with:
-        username: ${{ secrets.DOCKER_USER }}
-        password: ${{ secrets.DOCKER_SECRET }}
-        repository: soupbowl/opensimulator
+      - name: Checkout Codebase
+        uses: actions/checkout@v2
+
+      - name: Docker Hub Description
+        uses: peter-evans/dockerhub-description@v3
+        with:
+          username: ${{ secrets.DOCKER_USER }}
+          password: ${{ secrets.DOCKER_SECRET }}
+          repository: soupbowl/opensimulator
