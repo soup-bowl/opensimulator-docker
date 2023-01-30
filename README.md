@@ -1,10 +1,14 @@
-# OpenSimulator
+<h1 align="center">OpenSimulator</h1>
 
-![Screenshot from inside the Firestorm Metaverse client, showing a woman with a floating nametag 'foo bar' staring out into the ocean, standing upon a small mound island](https://user-images.githubusercontent.com/11209477/215429557-46cc3ef9-a697-4778-8d89-b9af6089eb5b.png)
+<p align="center">
+  <img src="https://img.shields.io/github/actions/workflow/status/soup-bowl/opensimulator-docker/build-main.yml" alt="GitHub Workflow Status" />
+  <img src="https://img.shields.io/docker/image-size/soupbowl/opensimulator/latest?logo=docker&logoColor=white" alt="Docker Image Size (tag)" />
+  <img src="https://img.shields.io/docker/pulls/soupbowl/opensimulator?logo=docker&logoColor=white" alt="Docker Pulls" />
+</p>
 
-![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/soup-bowl/opensimulator-docker/build-main.yml)
-![Docker Image Size (tag)](https://img.shields.io/docker/image-size/soupbowl/opensimulator/latest?logo=docker&logoColor=white)
-![Docker Pulls](https://img.shields.io/docker/pulls/soupbowl/opensimulator?logo=docker&logoColor=white)
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/11209477/215429557-46cc3ef9-a697-4778-8d89-b9af6089eb5b.png" alt="Screenshot from inside the Firestorm Metaverse client, showing a woman with a floating nametag 'foo bar' staring out into the ocean, standing upon a small mound island" />
+</p>
 
 From the [OpenSimulator][os] site:
 
