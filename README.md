@@ -13,7 +13,7 @@ This **unofficial** Docker configuration aims to assist in setting the server up
 ## Usage
 
 ```bash
-docker run -d --name opensim -p 9000:9000 -p 9000:9000/udp soupbowl/opensimulator:edge
+docker run -d --name opensim -p 9000:9000 -p 9000:9000/udp soupbowl/opensimulator:latest
 ```
 
 You can change settings with the following optional environmental overrides:
