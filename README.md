@@ -33,6 +33,27 @@ Once the server is running, you should be able to connect to it on `localhost:90
 
 If you don't define otherwise in the environments or a custom configuration, the login username is **Foo bar** and the password is **password**.
 
+## Limitations
+
+At current, there doesn't appear to be an implemented and/or documented approach to managing the server from _outside_ the active TTY, and running `docker attach opensim` seems to produce a blank prompt. You can `exec` into the container or edit the bound configuration script and restart the server to make changes, but in some server instances you might need to intercept the prompt.
+
+Until a better solution is made, you can get crafty with `screen` to get access to the current prompt in terminal, with the caveat that logging will no longer work.
+
+You can achieve this with a **Dockerfile** like so:
+
+```dockerfile
+FROM soupbowl/opensimulator:edge
+CMD [ "screen", "-S", "OpenSim", "-D", "-m", "mono",  "./OpenSim.exe" ]
+```
+
+With a container running the above Dockerfile, you can access a controllable OpenSimulator administration prompt by running:
+
+```
+docker exec -it <container name> screen -r OpenSim
+```
+
+You can leave the screen session by pressing `ctrl + a` then `d`.
+
 ## Examples
 
 See [this repository](https://github.com/soup-bowl/opensim-sandbox) for some example usages of this image.
