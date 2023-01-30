@@ -37,6 +37,11 @@ If you don't define otherwise in the environments or a custom configuration, the
 
 See [this repository](https://github.com/soup-bowl/opensim-sandbox) for some example usages of this image.
 
+## Source Code
+
+The source code of the Docker image is [found on the GitHub repository][src]. You can find the [OpenSimulator server software source code on their website](http://opensimulator.org/wiki/Developer_Documentation#Source_Code_Repository_Access).
+
+[src]: https://github.com/soup-bowl/opensimulator-docker
 [os]: http://opensimulator.org/wiki/Main_Page
 [grid]: https://wiki.secondlife.com/wiki/Land#Grid
 [estate]: https://wiki.secondlife.com/wiki/Land#Estate
