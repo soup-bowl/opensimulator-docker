@@ -1,11 +1,11 @@
-name: Build Container
+name: Build Beta Container
 
 on:
   push:
     branches:
     - main
     paths:
-    - "opensim/**"
+    - "beta/**"
   workflow_dispatch:
 
 jobs:
@@ -18,12 +18,6 @@ jobs:
     - name: Login to ghcr.io
       run: echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u soup-bowl --password-stdin
 
-    - name: Login to Docker Hub
-      uses: docker/login-action@v1
-      with:
-        username: ${{ secrets.DOCKER_USER }}
-        password: ${{ secrets.DOCKER_SECRET }}
-
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v1
 
@@ -35,6 +29,6 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         push: true
-        context: "{{defaultContext}}:opensim"
-        tags: soupbowl/opensimulator:edge,ghcr.io/soup-bowl/opensimulator-docker:edge
-        platforms: linux/amd64,linux/arm64
+        context: "{{defaultContext}}:build/main"
+        tags: ghcr.io/soup-bowl/opensimulator-docker:alpine-beta
+        platforms: linux/amd64
