@@ -11,6 +11,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        tag: ['alpine-beta']
     steps:
       - name: Checkout Codebase
         uses: actions/checkout@v2
@@ -29,6 +32,6 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          context: "{{defaultContext}}:build/main"
-          tags: ghcr.io/soup-bowl/opensimulator-docker:alpine-beta
+          context: "{{defaultContext}}:build/${{ matrix.tag }}"
+          tags: ghcr.io/soup-bowl/opensimulator-docker:${{ matrix.tag }}
           platforms: linux/amd64
