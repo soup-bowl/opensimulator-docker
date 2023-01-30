@@ -5,10 +5,12 @@ LABEL org.opencontainers.image.authors="code@soupbowl.io"
 LABEL org.opencontainers.image.source="https://github.com/soup-bowl/opensimulator-docker"
 LABEL org.opencontainers.image.licenses="MIT"
 
+ENV OPENSIM_VERSION 0.9.2.1
+
 RUN apt-get update && apt-get install -y screen uuid-runtime
 
 RUN mkdir /opt/opensim-tmp \
-    && curl http://opensimulator.org/dist/opensim-0.9.2.1.tar.gz | tar xzf - -C /opt/opensim-tmp \
+    && curl "http://opensimulator.org/dist/opensim-${OPENSIM_VERSION}.tar.gz" | tar xzf - -C /opt/opensim-tmp \
     && rm /opt/opensim-tmp/opensim*/bin/OpenSim.ini \
     && rm /opt/opensim-tmp/opensim*/bin/config-include/StandaloneCommon.ini \
     && mkdir /opt/opensim \
