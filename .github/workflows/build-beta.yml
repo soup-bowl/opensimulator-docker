@@ -32,6 +32,6 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          context: "{{defaultContext}}:build/${{ matrix.tag }}"
+          context: "{{defaultContext}}:beta/${{ matrix.tag }}"
           tags: ghcr.io/soup-bowl/opensimulator-docker:${{ matrix.tag }}
           platforms: linux/amd64
