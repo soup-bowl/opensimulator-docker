@@ -19,9 +19,11 @@ if [ ! -e OpenSim.ini ]; then
     StorageProvider = \"OpenSim.Data.MySQL.dll\"
     ConectionString = \"Data Source=${MYSQL_SERVER:-db};Database=${MYSQL_DATABASE:-opensim};User ID=${MYSQL_USER:-root};Password=${MYSQL_PASSWORD};Old Guids=true;\""  >> OpenSim.ini
 	fi
+else
+	echo >&2 "INFO: OpenSimulator general configuration found. Skipping..."
 fi
 
-if [ ! -e config-include/StandaloneCommon.ini ]; then
+if [ ! -e config-include/StandaloneCommon.ini ] || [ ! -e config-include/GridCommon.ini ]; then
 	echo >&2 "INFO: No Grid Common configuration found, pulling one together."
 	cp defaults/StandaloneCommon.ini config-include/StandaloneCommon.ini
 
@@ -45,6 +47,8 @@ if [ ! -e config-include/StandaloneCommon.ini ]; then
 	if [ -n "${GRID_NAME}" ]; then
 		sed -i -e "s/OpenSimulator Instance/${GRID_NAME}/g" config-include/StandaloneCommon.ini
 	fi
+else
+	echo >&2 "INFO: Standalone or Grid configuration found. Skipping..."
 fi
 
 if [ `find Regions -maxdepth 1 -name '*.ini' | wc -l` -eq 0 ]; then
@@ -52,11 +56,13 @@ if [ `find Regions -maxdepth 1 -name '*.ini' | wc -l` -eq 0 ]; then
 
 	echo "[${REGION_NAME:-Region}]
 	RegionUUID = $(uuidgen)
-	Location = 1000,1000
+	Location = ${REGION_LOCATION:-1000,1000}
 	InternalAddress = 0.0.0.0
     InternalPort = 9000
     AllowAlternatePorts = False
-    ExternalHostName = localhost" >> Regions/Regions.ini
+    ExternalHostName = ${REGION_EXTERNAL_HOSTNAME:-localhost}" >> Regions/Regions.ini
+else
+	echo >&2 "INFO: Looks like there's region definitions. Skipping..."
 fi
 
 if [ ! -e config-include/storage/SQLiteStandalone.ini ]; then
