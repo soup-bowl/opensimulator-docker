@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 set -Eeo pipefail
 
 chown -R $(id -u):$(id -g) defaults

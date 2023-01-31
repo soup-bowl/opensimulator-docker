@@ -7,7 +7,7 @@ LABEL org.opencontainers.image.licenses="MIT"
 
 ENV OPENSIM_VERSION 0.9.2.1
 
-RUN apk add --no-cache curl uuidgen screen
+RUN apk add --no-cache bash curl uuidgen screen
 RUN apk add --no-cache mono --repository=https://dl-cdn.alpinelinux.org/alpine/edge/testing
 
 RUN mkdir /opt/opensim-tmp \
