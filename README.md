@@ -41,6 +41,18 @@ Once the server is running, you should be able to connect to it on `localhost:90
 
 If you don't define otherwise in the environments or a custom configuration, the login username is **Foo bar** and the password is **password**.
 
+### SQLite Persistence
+
+Outside of configurations, pretty much everything OpenSimulator does is stored in your chosen database provider. If you choose to leave the default on (sqlite), then your installation will not persist if you remove your container.
+
+To aid the use of SQLite mode with persistent data, the default configuration has been modified to create the database directories into a dedicated directory (`/opt/opensim/bin/sqlite-database`). The following command will allow you to run a persistent SQLite setup.
+
+(Note that if you use a custom `SQLiteStandalone.ini` file, this will not happen).
+
+```
+docker run -d --name opensim -p 9000:9000 -p 9000:9000/udp -v /path/on/your/system:/opt/opensim/bin/sqlite-database  soupbowl/opensimulator:latest
+```
+
 ## Limitations
 
 At current, there doesn't appear to be an implemented and/or documented approach to managing the server from _outside_ the active TTY, and running `docker attach opensim` seems to produce a blank prompt. You can `exec` into the container or edit the bound configuration script and restart the server to make changes, but in some server instances you might need to intercept the prompt.

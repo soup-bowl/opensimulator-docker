@@ -59,4 +59,9 @@ if [ `find Regions -maxdepth 1 -name '*.ini' | wc -l` -eq 0 ]; then
     ExternalHostName = localhost" >> Regions/Regions.ini
 fi
 
+if [ ! -e config-include/storage/SQLiteStandalone.ini ]; then
+	cp defaults/SQLiteStandalone.ini config-include/storage/SQLiteStandalone.ini
+	mkdir -p sqlite-database
+fi
+
 exec "$@"
