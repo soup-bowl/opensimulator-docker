@@ -14,6 +14,7 @@ RUN mkdir /opt/opensim-tmp \
     && curl "http://opensimulator.org/dist/opensim-${OPENSIM_VERSION}.tar.gz"  | tar xzf - -C /opt/opensim-tmp \
     && rm /opt/opensim-tmp/opensim*/bin/OpenSim.ini \
     && rm /opt/opensim-tmp/opensim*/bin/config-include/StandaloneCommon.ini \
+    && rm /opt/opensim-tmp/opensim*/bin/config-include/storage/SQLiteStandalone.ini \
     && mkdir /opt/opensim \
     && mv /opt/opensim-tmp/opensim*/* /opt/opensim
 
