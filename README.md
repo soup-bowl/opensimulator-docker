@@ -62,7 +62,7 @@ Until a better solution is made, you can get crafty with `screen` to get access 
 You can achieve this with a **Dockerfile** like so:
 
 ```dockerfile
-FROM soupbowl/opensimulator:edge
+FROM soupbowl/opensimulator:latest
 CMD [ "screen", "-S", "OpenSim", "-D", "-m", "mono",  "./OpenSim.exe" ]
 ```
 
