@@ -40,6 +40,6 @@ jobs:
           push: true
           context: "{{defaultContext}}:beta/${{ matrix.tag }}"
           tags: >
-            soupbowl/opensimulator:${{ matrix.tag }}
+            soupbowl/opensimulator:${{ matrix.tag }},
             ghcr.io/soup-bowl/opensimulator-docker:${{ matrix.tag }}
           platforms: linux/amd64
