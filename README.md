@@ -55,6 +55,8 @@ docker run -d --name opensim -p 9000:9000 -p 9000:9000/udp -v /path/on/your/syst
 
 # Limitations
 
+## Running Server Admin Commands
+
 At current, there doesn't appear to be an implemented and/or documented approach to managing the server from _outside_ the active TTY, and running `docker attach opensim` seems to produce a blank prompt. You can `exec` into the container or edit the bound configuration script and restart the server to make changes, but in some server instances you might need to intercept the prompt.
 
 Until a better solution is made, you can get crafty with `screen` to get access to the current prompt in terminal, with the caveat that logging will no longer work.
@@ -73,6 +75,17 @@ docker exec -it <container name> screen -r OpenSim
 ```
 
 You can leave the screen session by pressing `ctrl + a` then `d`.
+
+## Physics in ARM
+
+Each image has an ARM64 architecture build. Your mileage may vary with these as the server environment was not designed for use outside x86_64.
+
+Currently, **Physics environments do not appear to be natively supported**, and running a server with BulletSim or OpenDynamicsEngine (ODE) will cause a fatal exception. You unfortunately currently have to run the server without physics. This can be achieved with the following OpenSim configuration:
+
+```ini
+[Startup]
+   physics = basicphysics
+```
 
 # Examples
 
