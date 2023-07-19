@@ -5,7 +5,7 @@ LABEL org.opencontainers.image.authors="code@soupbowl.io"
 LABEL org.opencontainers.image.source="https://github.com/soup-bowl/opensimulator-docker"
 LABEL org.opencontainers.image.licenses="MIT"
 
-ENV OPENSIM_VERSION 0.9.2.1
+ENV OPENSIM_VERSION 0.9.2.2
 
 RUN apt-get update && apt-get install -y screen uuid-runtime
 
