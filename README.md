@@ -87,6 +87,8 @@ Currently, **Physics environments do not appear to be natively supported**, and 
    physics = basicphysics
 ```
 
+Alternatively, a suitable drop-in library in `lib64/libBulletSim-aarch64.so` for BulletSim Physics could work, but may be unsupported.
+
 # Examples
 
 See [this repository](https://github.com/soup-bowl/opensim-sandbox) for some example usages of this image.
