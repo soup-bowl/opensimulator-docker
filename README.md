@@ -18,7 +18,7 @@ This **unofficial** Docker configuration aims to assist in setting the server up
 
 **This is still experimental - thar be bugs!**
 
-## Usage
+# Usage
 
 ```bash
 docker run -d --name opensim -p 9000:9000 -p 9000:9000/udp soupbowl/opensimulator:latest
@@ -41,7 +41,7 @@ Once the server is running, you should be able to connect to it on `localhost:90
 
 If you don't define otherwise in the environments or a custom configuration, the login username is **Foo bar** and the password is **password**.
 
-### SQLite Persistence
+## SQLite Persistence
 
 Outside of configurations, pretty much everything OpenSimulator does is stored in your chosen database provider. If you choose to leave the default on (sqlite), then your installation will not persist if you remove your container.
 
@@ -53,7 +53,7 @@ To aid the use of SQLite mode with persistent data, the default configuration ha
 docker run -d --name opensim -p 9000:9000 -p 9000:9000/udp -v /path/on/your/system:/opt/opensim/bin/sqlite-database  soupbowl/opensimulator:latest
 ```
 
-## Limitations
+# Limitations
 
 At current, there doesn't appear to be an implemented and/or documented approach to managing the server from _outside_ the active TTY, and running `docker attach opensim` seems to produce a blank prompt. You can `exec` into the container or edit the bound configuration script and restart the server to make changes, but in some server instances you might need to intercept the prompt.
 
@@ -74,11 +74,23 @@ docker exec -it <container name> screen -r OpenSim
 
 You can leave the screen session by pressing `ctrl + a` then `d`.
 
-## Examples
+# Examples
 
 See [this repository](https://github.com/soup-bowl/opensim-sandbox) for some example usages of this image.
 
-## Source Code
+# Variants
+
+Variant names are listed in Dockerhub format. They are also available from the GitHub Registry, replacing `soupbowl/opensimulator` with `ghcr.io/soup-bowl/opensimulator-docker`.
+
+## `soupbowl/opensimulator:latest`
+
+The latest OpenSimulator image build using `mono:latest` as the build reference.
+
+## `soupbowl/opensimulator:alpine-beta`
+
+A bleeding edge variant using **Alpine** as the build image with **Mono** dependency added. Mono is currently not in the stable packages build, so this image is considered unstable. Progress can be tracked on the [#1 ticket](https://github.com/soup-bowl/opensimulator-docker/issues/1).
+
+# Source Code
 
 The source code of the Docker image is [found on the GitHub repository][src]. You can find the [OpenSimulator server software source code on their website](http://opensimulator.org/wiki/Developer_Documentation#Source_Code_Repository_Access).
 
