@@ -71,7 +71,7 @@ CMD [ "screen", "-S", "OpenSim", "-D", "-m", "mono",  "./OpenSim.exe" ]
 With a container running the above Dockerfile, you can access a controllable OpenSimulator administration prompt by running:
 
 ```
-docker exec -it <container name> screen -r OpenSim
+docker exec -it <container name> screen -r -d OpenSim
 ```
 
 You can leave the screen session by pressing `ctrl + a` then `d`.
