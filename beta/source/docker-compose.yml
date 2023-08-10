@@ -12,11 +12,14 @@ services:
       MYSQL_DATABASE: metaverse
       MYSQL_ROOT_PASSWORD: password
   metaverse:
+    container_name: opensim
     build:
       context: .
     depends_on:
       db:
         condition: service_healthy
+    stdin_open: true
+    tty: true
     ports:
       - "9000:9000"
       - "9000:9000/udp"
@@ -26,6 +29,8 @@ services:
       MYSQL_DATABASE: metaverse
       MYSQL_USER: root
       MYSQL_PASSWORD: password
+      ESTATE_OWNER_NAME: Governor Linden
+      ESTATE_OWNER_PASSWORD: password
 
 volumes:
   database_store:
