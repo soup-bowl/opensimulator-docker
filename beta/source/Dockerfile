@@ -13,7 +13,7 @@ LABEL org.opencontainers.image.authors="code@soupbowl.io"
 LABEL org.opencontainers.image.source="https://github.com/soup-bowl/opensimulator-docker"
 LABEL org.opencontainers.image.licenses="MIT"
 
-RUN apt-get update && apt-get install -y apt-utils libgdiplus libc6-dev screen uuid-runtime
+RUN apt-get update && apt-get install -y apt-utils libgdiplus libc6-dev libsqlite3-dev screen uuid-runtime
 
 COPY --from=build /app /opt/opensim
 
