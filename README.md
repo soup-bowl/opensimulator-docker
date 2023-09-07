@@ -105,6 +105,12 @@ The latest OpenSimulator image build using `mono:latest` as the build reference.
 
 A bleeding edge variant using **Alpine** as the build image with **Mono** dependency added. Mono is currently not in the stable packages build, so this image is considered unstable. Progress can be tracked on the [#1 ticket](https://github.com/soup-bowl/opensimulator-docker/issues/1).
 
+## `soupbowl/opensimulator:source`
+
+Gets the latest available code from the OpenSimulator repoistory, and constructs a bleeding edge container. Configuration is not different, but this is **compiled from source** and should be **treated as highly unstable**.
+
+These are compiled to use the [official .NET root image](https://mcr.microsoft.com/en-us/product/dotnet/runtime/about), instead of the [Mono Framework](https://hub.docker.com/_/mono/).
+
 # Source Code
 
 The source code of the Docker image is [found on the GitHub repository][src]. You can find the [OpenSimulator server software source code on their website](http://opensimulator.org/wiki/Developer_Documentation#Source_Code_Repository_Access).
