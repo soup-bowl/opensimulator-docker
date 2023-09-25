@@ -1,6 +1,8 @@
 FROM mcr.microsoft.com/dotnet/sdk:6.0 as build
 
-RUN git clone git://opensimulator.org/git/opensim /app
+# Cache Bust to avoid caching skipping the latest commit
+ADD https://api.github.com/repos/opensim/opensim/git/refs/heads/dotnet6 version.json
+RUN git clone https://github.com/opensim/opensim.git /app
 WORKDIR /app
 RUN git checkout dotnet6
 
