@@ -23,7 +23,7 @@ else
 	echo >&2 "INFO: OpenSimulator general configuration found. Skipping..."
 fi
 
-if [ ! -e config-include/StandaloneCommon.ini ] || [ ! -e config-include/GridCommon.ini ]; then
+if [ ! -e config-include/StandaloneCommon.ini ] && [ ! -e config-include/GridCommon.ini ]; then
 	echo >&2 "INFO: No Grid Common configuration found, pulling one together."
 	cp defaults/StandaloneCommon.ini config-include/StandaloneCommon.ini
 
