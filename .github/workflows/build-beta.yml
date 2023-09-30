@@ -45,5 +45,5 @@ jobs:
             soupbowl/opensimulator:${{ matrix.tag }},
             ghcr.io/soup-bowl/opensimulator-docker:${{ matrix.tag }}
           platforms: linux/amd64,linux/arm64
-#          cache-from: type=gha
-#          cache-to: type=gha,mode=max
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
