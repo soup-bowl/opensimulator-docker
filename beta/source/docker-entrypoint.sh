@@ -7,6 +7,11 @@ if [ ! -e OpenSim.ini ]; then
 	echo >&2 "INFO: No OpenSim configuration found, pulling one together."
 	cp defaults/OpenSim.ini OpenSim.ini
 
+	if [ -n "${PHYSICS_ENGINE}" ]; then
+		echo -e "\n[Startup]
+	physics = ${PHYSICS_ENGINE:-BulletSim}" >> OpenSim.ini
+	fi
+
 	echo -e "\n[Estates]
     DefaultEstateName = ${ESTATE_NAME:-Default Estate}
     DefaultEstateOwnerName = ${ESTATE_OWNER_NAME:-Foo Bar}
