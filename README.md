@@ -36,6 +36,7 @@ You can change settings with the following optional environmental overrides:
 * `-e ESTATE_OWNER_EMAIL=...` to define the estate email address.
 * `-e DATABASE_ENGINE=...` to change the database engine (sqlite and mysql support so far) - defaults to sqlite.
 * `-e MYSQL_SERVER=...`, `-e MYSQL_DATABASE=...`, `-e MYSQL_USER=...`, `-e MYSQL_PASSWORD=...` if `DATABASE_ENGINE` is `mysql`.
+* `-e PHYSICS_ENGINE=...` to change the physics engine. Default is `BulletSim` with others being `OpenDynamicsEngine`, `ubODE` and `basicphysics`.
 
 Once the server is running, you should be able to connect to it on `localhost:9000`. In **Firestorm Viewer**, you can go to **Preferences**, then **Opensim**, then under **add new grid** put `localhost:9000` and you can then login.
 
