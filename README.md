@@ -42,6 +42,12 @@ Once the server is running, you should be able to connect to it on `localhost:90
 
 If you don't define otherwise in the environments or a custom configuration, the login username is **Foo bar** and the password is **password**.
 
+## Custom Configurations
+
+The environment list is not inclusive to the incredible range of options that OpenSimulator can be configured, and just covers a subset of the most popular settings. If you specify your own custom configuration file, it will be used instead of the image-generated configuration (you can define it as readonly (`:ro`) for assurance).
+
+The working directory is `/opt/opensim/bin/`, so for example overriding `OpenSim.ini` would be `"/path/to/local/OpenSim.ini:/opt/opensim/bin/OpenSim.ini:ro"` ([example](https://github.com/soup-bowl/opensim-sandbox/blob/1d4324e1bdd4ba715edc1c3f78e78842e7374f1b/standalone-wordpress/docker-compose.yml#L34)).
+
 ## SQLite Persistence
 
 Outside of configurations, pretty much everything OpenSimulator does is stored in your chosen database provider. If you choose to leave the default on (sqlite), then your installation will not persist if you remove your container.
