@@ -87,7 +87,7 @@ You can leave the screen session by pressing `ctrl + a` then `d`.
 
 Each image has an ARM64 architecture build. Your mileage may vary with these as the server environment was not designed for use outside x86_64.
 
-Currently, **Physics environments do not appear to be natively supported**, and running a server with BulletSim or OpenDynamicsEngine (ODE) will cause a fatal exception. You unfortunately currently have to run the server without physics. This can be achieved with the following OpenSim configuration:
+Currently, **Physics environments do not appear to be natively supported**, and running a server with BulletSim or OpenDynamicsEngine (ODE) will cause a fatal exception. You unfortunately currently have to run the server without physics. This can be achieved by setting the environment `-e PHYSICS_ENGINE=basicphysics`, or with the following OpenSim configuration adjustment:
 
 ```ini
 [Startup]
