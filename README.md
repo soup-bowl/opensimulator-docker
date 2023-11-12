@@ -89,6 +89,8 @@ Currently, **Physics environments do not appear to be natively supported**, and 
 
 Alternatively, a suitable drop-in library in `lib64/libBulletSim-aarch64.so` for BulletSim Physics could work, but may be unsupported.
 
+**I'm keen to support ARM architecture to the bounds of OpenSimulator. If you have any experience on this, please reach out to me.**
+
 # Examples
 
 See [this repository](https://github.com/soup-bowl/opensim-sandbox) for some example usages of this image.
