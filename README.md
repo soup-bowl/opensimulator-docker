@@ -116,7 +116,7 @@ A bleeding edge variant using **Alpine** as the build image with **Mono** depend
 
 ## `soupbowl/opensimulator:source`
 
-Gets the latest available code from the OpenSimulator repoistory, and constructs a bleeding edge container. Configuration is not different, but this is **compiled from source** and should be **treated as highly unstable**.
+Gets the latest available code from the OpenSimulator repository, and constructs a bleeding edge container. Configuration is not different, but this is **compiled from source** and should be **treated as highly unstable**.
 
 These are compiled to use the [official .NET root image](https://mcr.microsoft.com/en-us/product/dotnet/runtime/about), instead of the [Mono Framework](https://hub.docker.com/_/mono/).
 
