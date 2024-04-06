@@ -4,7 +4,7 @@ FROM mcr.microsoft.com/dotnet/sdk:6.0 as build
 ADD https://api.github.com/repos/opensim/opensim/git/refs/heads/dotnet6 version.json
 RUN git clone https://github.com/opensim/opensim.git /app
 WORKDIR /app
-RUN git checkout dotnet6
+RUN git checkout master
 
 RUN ./runprebuild.sh && ./compile.sh
 
