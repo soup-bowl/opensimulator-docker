@@ -55,6 +55,6 @@ jobs:
             soupbowl/opensimulator:${{ fromJSON(matrix.tag).tag }},
             ghcr.io/soup-bowl/opensimulator-docker:${{ fromJSON(matrix.tag).tag }},
           platforms: ${{ fromJSON(matrix.tag).platforms }}
-          file: "{context}/${{ fromJSON(matrix.tag).file }}"
+          file: "${{ fromJSON(matrix.tag).file }}"
           cache-from: type=gha
           cache-to: type=gha,mode=max
