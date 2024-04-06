@@ -17,9 +17,10 @@ jobs:
     strategy:
       matrix:
         tag:
-            - '{ "tag": "latest", "folder": "build/latest", "platforms": "linux/amd64,linux/arm64" }'
-            - '{ "tag": "alpine-beta", "folder": "beta/alpine", "platforms": "linux/amd64,linux/arm64" }'
-            - '{ "tag": "source", "folder": "beta/source", "platforms": "linux/amd64,linux/arm64" }'
+            - '{ "tag": "latest", "folder": "build/latest", "file": "Dockerfile", "platforms": "linux/amd64,linux/arm64" }'
+            - '{ "tag": "alpine-beta", "folder": "beta/alpine", "file": "Dockerfile", "platforms": "linux/amd64,linux/arm64" }'
+            - '{ "tag": "source", "folder": "beta/source", "file": "Dockerfile", "platforms": "linux/amd64,linux/arm64" }'
+            - '{ "tag": "dotnet6", "folder": "beta/source", "file": "Dockerfile.dotnet6", "platforms": "linux/amd64,linux/arm64" }'
     steps:
       - name: Checkout Codebase
         uses: actions/checkout@v4
@@ -54,5 +55,6 @@ jobs:
             soupbowl/opensimulator:${{ fromJSON(matrix.tag).tag }},
             ghcr.io/soup-bowl/opensimulator-docker:${{ fromJSON(matrix.tag).tag }},
           platforms: ${{ fromJSON(matrix.tag).platforms }}
+          file: "{context}/${{ fromJSON(matrix.tag).file }}"
           cache-from: type=gha
           cache-to: type=gha,mode=max
