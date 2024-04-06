@@ -1,7 +1,7 @@
 <h1 align="center">OpenSimulator</h1>
 
 <p align="center">
-  <a href="https://github.com/soup-bowl/opensimulator-docker/actions/workflows/build.yml"><img src="https://img.shields.io/github/actions/workflow/status/soup-bowl/opensimulator-docker/build.yml?style=plastic" alt="GitHub Workflow Status" /></a>
+  <a href="https://github.com/soup-bowl/opensimulator-docker/actions/workflows/build-main.yml"><img src="https://img.shields.io/github/actions/workflow/status/soup-bowl/opensimulator-docker/build-main.yml?style=plastic" alt="GitHub Workflow Status" /></a>
   <a href="https://hub.docker.com/r/soupbowl/opensimulator"><img src="https://img.shields.io/docker/image-size/soupbowl/opensimulator/latest?logo=docker&logoColor=white&style=plastic" alt="Docker Image Size (tag)" /></a>
   <a href="https://hub.docker.com/r/soupbowl/opensimulator"><img src="https://img.shields.io/docker/pulls/soupbowl/opensimulator?logo=docker&logoColor=white&style=plastic" alt="Docker Pulls" /></a>
 </p>
