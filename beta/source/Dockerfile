@@ -1,7 +1,7 @@
-FROM mcr.microsoft.com/dotnet/sdk:6.0 as build
+FROM mcr.microsoft.com/dotnet/sdk:8.0 as build
 
 # Cache Bust to avoid caching skipping the latest commit
-ADD https://api.github.com/repos/opensim/opensim/git/refs/heads/dotnet6 version.json
+ADD https://api.github.com/repos/opensim/opensim/git/refs/heads/master version.json
 RUN git clone https://github.com/opensim/opensim.git /app
 WORKDIR /app
 RUN git checkout master
@@ -10,7 +10,7 @@ RUN ./runprebuild.sh && ./compile.sh
 
 RUN rm bin/config-include/storage/SQLiteStandalone.ini
 
-FROM mcr.microsoft.com/dotnet/runtime:6.0
+FROM mcr.microsoft.com/dotnet/runtime:8.0
 
 LABEL org.opencontainers.image.title="OpenSimulator (unofficial)"
 LABEL org.opencontainers.image.authors="code@soupbowl.io"
