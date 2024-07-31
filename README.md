@@ -122,6 +122,12 @@ These are compiled to use the [official .NET root image](https://mcr.microsoft.c
 
 **Note**: This was originally building from the `dotnet6` branch of the OpenSimulator repository. This image is now truly built from source, but if you want to use the original-type image, it is now built to the container tag `dotnet6`.
 
+## `soupbowl/opensimulator:source-windowsservercore-ltsc2022`
+
+A variant of the OpenSimulator image that will run on Windows-native hosts, Windows 10 and above. **This is even more experimental than source, so you use this at even more of your own risk**.
+
+This uses the  [Dotnet Runtime Server Core](https://mcr.microsoft.com/en-us/product/dotnet/runtime/about) base image, and is built from the `master` branch.
+
 # Source Code
 
 The source code of the Docker image is [found on the GitHub repository][src]. You can find the [OpenSimulator server software source code on their website](http://opensimulator.org/wiki/Developer_Documentation#Source_Code_Repository_Access).
