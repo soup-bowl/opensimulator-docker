@@ -1,0 +1,40 @@
+# escape=`
+
+FROM mcr.microsoft.com/dotnet/sdk:8.0-windowsservercore-ltsc2022 as build
+
+SHELL ["pwsh", "-Command"]
+
+RUN git config --global --add safe.directory C:/app
+
+# Cache Bust to avoid caching skipping the latest commit
+ADD https://api.github.com/repos/opensim/opensim/git/refs/heads/master version.json
+RUN git clone https://github.com/opensim/opensim.git /app
+WORKDIR /app
+RUN git checkout master
+
+RUN ./runprebuild.bat; ./compile.bat
+
+RUN Remove-Item -Path "bin\config-include\storage\SQLiteStandalone.ini"
+
+FROM mcr.microsoft.com/dotnet/runtime:8.0-windowsservercore-ltsc2022
+
+LABEL org.opencontainers.image.title="OpenSimulator (unofficial)"
+LABEL org.opencontainers.image.authors="code@soupbowl.io"
+LABEL org.opencontainers.image.source="https://github.com/soup-bowl/opensimulator-docker"
+LABEL org.opencontainers.image.licenses="MIT"
+
+COPY --from=build /app /opt/opensim
+
+COPY defaults  /opt/opensim/bin/defaults
+
+EXPOSE 9000
+
+WORKDIR /opt/opensim/bin
+
+COPY docker-entrypoint.ps1  /osgr/docker-entrypoint.ps1
+USER ContainerAdministrator
+RUN setx /M PATH "%PATH%;C:\osgr"
+USER ContainerUser
+
+ENTRYPOINT ["powershell", "/osgr/docker-entrypoint.ps1"]
+CMD ["/opt/opensim/bin/OpenSim.exe"]
