@@ -1,0 +1,34 @@
+name: Build Experimental Images (Windows)
+
+on:
+  schedule:
+    - cron: "0 0 1 * *"
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Cache Docker layers
+        uses: actions/cache@v3
+        with:
+          path: |
+            C:\ProgramData\docker\tmp\buildkit
+          key: ${{ runner.os }}-win-docker-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-win-docker-
+
+      - name: Log in to GitHub Container Registry
+        run: echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u soup-bowl --password-stdin
+
+      # --cache-to=type=local,dest=C:\ProgramData\docker\tmp\buildkit
+      - name: Build Docker image
+        run: |
+          cmd /c docker build --cache-from=type=local,src=C:\ProgramData\docker\tmp\buildkit -t ghcr.io/soup-bowl/opensimulator-docker:source-windowsservercore-ltsc2022 -f ./beta/source/Dockerfile.windows ./beta/source
+
+      - name: Push Docker image to GHCR
+        run: docker push ghcr.io/soup-bowl/opensimulator-docker:source-windowsservercore-ltsc2022
