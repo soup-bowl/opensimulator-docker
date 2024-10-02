@@ -15,10 +15,20 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        tag:
-            - '{ "tag": "alpine-beta", "folder": "beta/alpine", "file": "Dockerfile", "platforms": "linux/amd64,linux/arm64" }'
-            - '{ "tag": "source", "folder": "beta/source", "file": "Dockerfile", "platforms": "linux/amd64" }'
-            - '{ "tag": "dotnet6", "folder": "beta/source", "file": "Dockerfile.dotnet6", "platforms": "linux/amd64,linux/arm64" }'
+        include:
+          - tag: alpine-beta
+            folder: beta/alpine
+            file: Dockerfile
+            platforms: linux/amd64,linux/arm64
+          - tag: source
+            folder: beta/source
+            file: Dockerfile
+            platforms: linux/amd64
+          - tag: dotnet6
+            folder: beta/source
+            file: Dockerfile.dotnet6
+            platforms: linux/amd64,linux/arm64
+
     steps:
       - name: Checkout Codebase
         uses: actions/checkout@v4
@@ -44,15 +54,15 @@ jobs:
         uses: docker/setup-buildx-action@v3
 
       - name: Build Container
-        #if: github.event_name != 'schedule' || fromJSON(matrix.tag).tag == 'source'
+        #if: github.event_name != 'schedule' || matrix.tag == 'source'
         uses: docker/build-push-action@v5
         with:
           push: true
-          context: "{{defaultContext}}:${{ fromJSON(matrix.tag).folder }}"
+          context: "{{defaultContext}}:${{ matrix.folder }}"
           tags: >
-            soupbowl/opensimulator:${{ fromJSON(matrix.tag).tag }},
-            ghcr.io/soup-bowl/opensimulator-docker:${{ fromJSON(matrix.tag).tag }},
-          platforms: ${{ fromJSON(matrix.tag).platforms }}
-          file: "${{ fromJSON(matrix.tag).file }}"
+            soupbowl/opensimulator:${{ matrix.tag }},
+            ghcr.io/soup-bowl/opensimulator-docker:${{ matrix.tag }},
+          platforms: ${{ matrix.platforms }}
+          file: "${{ matrix.file }}"
           cache-from: type=gha
           cache-to: type=gha,mode=max

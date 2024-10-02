@@ -13,11 +13,20 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        tag:
-            - '{ "tag": "0.9.2.0", "folder": "build/latest", "platforms": "linux/amd64,linux/arm64" }'
-            - '{ "tag": "0.9.2.1", "folder": "build/latest", "platforms": "linux/amd64,linux/arm64" }'
-            - '{ "tag": "0.9.2.2", "folder": "build/latest", "platforms": "linux/amd64,linux/arm64" }'
-            - '{ "tag": "latest", "folder": "build/latest", "platforms": "linux/amd64,linux/arm64" }'
+        include:
+          - tag: "0.9.2.0"
+            folder: build/latest
+            platforms: linux/amd64,linux/arm64
+          - tag: "0.9.2.1"
+            folder: build/latest
+            platforms: linux/amd64,linux/arm64
+          - tag: "0.9.2.2"
+            folder: build/latest
+            platforms: linux/amd64,linux/arm64
+          - tag: "latest"
+            folder: build/latest
+            platforms: linux/amd64,linux/arm64
+
     steps:
       - name: Checkout Codebase
         uses: actions/checkout@v4
@@ -46,12 +55,12 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           push: true
-          context: "{{defaultContext}}:${{ fromJSON(matrix.tag).folder }}"
+          context: "{{defaultContext}}:${{ matrix.folder }}"
           tags: >
-            soupbowl/opensimulator:${{ fromJSON(matrix.tag).tag }},
-            ghcr.io/soup-bowl/opensimulator-docker:${{ fromJSON(matrix.tag).tag }},
-          platforms: ${{ fromJSON(matrix.tag).platforms }}
+            soupbowl/opensimulator:${{ matrix.tag }},
+            ghcr.io/soup-bowl/opensimulator-docker:${{ matrix.tag }},
+          platforms: ${{ matrix.platforms }}
           build-args: |
-            OPENSIM_VERSION=${{ fromJSON(matrix.tag).tag }}
+            OPENSIM_VERSION=${{ matrix.tag }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
