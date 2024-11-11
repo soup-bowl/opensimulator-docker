@@ -16,15 +16,23 @@ jobs:
         include:
           - tag: "0.9.2.0"
             folder: build/latest
+            file: Dockerfile.mono
             platforms: linux/amd64,linux/arm64
           - tag: "0.9.2.1"
             folder: build/latest
+            file: Dockerfile.mono
             platforms: linux/amd64,linux/arm64
           - tag: "0.9.2.2"
             folder: build/latest
+            file: Dockerfile.mono
+            platforms: linux/amd64,linux/arm64
+          - tag: "0.9.3.0"
+            folder: build/latest
+            file: Dockerfile
             platforms: linux/amd64,linux/arm64
           - tag: "latest"
             folder: build/latest
+            file: Dockerfile.mono
             platforms: linux/amd64,linux/arm64
 
     steps:
@@ -60,6 +68,7 @@ jobs:
             soupbowl/opensimulator:${{ matrix.tag }},
             ghcr.io/soup-bowl/opensimulator-docker:${{ matrix.tag }},
           platforms: ${{ matrix.platforms }}
+          file: "${{ matrix.file }}"
           build-args: |
             OPENSIM_VERSION=${{ matrix.tag }}
           cache-from: type=gha

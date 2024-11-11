@@ -1,14 +1,14 @@
-FROM mcr.microsoft.com/dotnet/runtime:8.0
+FROM docker.io/library/mono:latest
 
 LABEL org.opencontainers.image.title="OpenSimulator (unofficial)"
 LABEL org.opencontainers.image.authors="code@soupbowl.io"
 LABEL org.opencontainers.image.source="https://github.com/soup-bowl/opensimulator-docker"
 LABEL org.opencontainers.image.licenses="MIT"
 
-ARG OPENSIM_VERSION=0.9.3.0
+ARG OPENSIM_VERSION=0.9.2.2
 
 RUN apt-get update \
-    && apt-get install -y apt-utils curl libc6-dev libgdiplus libsqlite3-dev screen uuid-runtime \
+    && apt-get install -y curl screen uuid-runtime \
     && rm -rf /var/lib/apt/lists/* /var/cache/apt/archives/*
 
 RUN mkdir /opt/opensim-tmp \
@@ -28,4 +28,4 @@ WORKDIR /opt/opensim/bin
 COPY docker-entrypoint.sh /usr/local/bin/
 
 ENTRYPOINT ["docker-entrypoint.sh"]
-CMD [ "screen", "-S", "OpenSim", "-D", "-m", "dotnet",  "OpenSim.dll" ]
+CMD [ "mono", "./OpenSim.exe" ]

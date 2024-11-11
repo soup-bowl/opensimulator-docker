@@ -66,22 +66,22 @@ docker run -d --name opensim -p 9000:9000 -p 9000:9000/udp -v /path/on/your/syst
 
 At current, there doesn't appear to be an implemented and/or documented approach to managing the server from _outside_ the active TTY, and running `docker attach opensim` seems to produce a blank prompt. You can `exec` into the container or edit the bound configuration script and restart the server to make changes, but in some server instances you might need to intercept the prompt.
 
-Until a better solution is made, you can get crafty with `screen` to get access to the current prompt in terminal, with the caveat that logging will no longer work.
+This Docker image comes with `screen` built in, to allow you to access the administration prompt. This also seems to help prevent against Docker from accidentally destroying the image (currently investigating).
 
-You can achieve this with a **Dockerfile** like so:
-
-```dockerfile
-FROM soupbowl/opensimulator:latest
-CMD [ "screen", "-S", "OpenSim", "-D", "-m", "mono",  "./OpenSim.exe" ]
-```
-
-With a container running the above Dockerfile, you can access a controllable OpenSimulator administration prompt by running:
+You can access a controllable OpenSimulator administration prompt by running:
 
 ```
 docker exec -it <container name> screen -r -d OpenSim
 ```
 
 You can leave the screen session by pressing `ctrl + a` then `d`.
+
+If you wish to run **without**, you can modify the Dockerfile like so:
+
+```dockerfile
+FROM soupbowl/opensimulator:latest
+CMD [ "dotnet",  "OpenSim.dll" ]
+```
 
 ## Physics in ARM
 
@@ -108,17 +108,19 @@ Variant names are listed in Dockerhub format. They are also available from the G
 
 ## `soupbowl/opensimulator:latest`
 
-The latest OpenSimulator image build using `mono:latest` as the build reference.
+The latest OpenSimulator image build using [official .NET 8 image](https://mcr.microsoft.com/en-us/product/dotnet/runtime/about) as the build reference.
+
+If you pull from **0.9.2.2** or below, you will instead be using the [Mono Framework](https://hub.docker.com/_/mono/).
 
 ## `soupbowl/opensimulator:alpine-beta`
 
 A bleeding edge variant using **Alpine** as the build image with **Mono** dependency added. Mono is currently not in the stable packages build, so this image is considered unstable. Progress can be tracked on the [#1 ticket](https://github.com/soup-bowl/opensimulator-docker/issues/1).
 
+**This will be revised/removed since OpenSimulator have moved away from Mono.**
+
 ## `soupbowl/opensimulator:source`
 
 Gets the latest available code from the OpenSimulator repository, and constructs a bleeding edge container. Configuration is not different, but this is **compiled from source** and should be **treated as highly unstable**. These are built **4 times daily**, providing a change has occurred.
-
-These are compiled to use the [official .NET root image](https://mcr.microsoft.com/en-us/product/dotnet/runtime/about), instead of the [Mono Framework](https://hub.docker.com/_/mono/).
 
 **Note**: This was originally building from the `dotnet6` branch of the OpenSimulator repository. This image is now truly built from source, but if you want to use the original-type image, it is now built to the container tag `dotnet6`.
 
