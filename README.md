@@ -66,7 +66,7 @@ docker run -d --name opensim -p 9000:9000 -p 9000:9000/udp -v /path/on/your/syst
 
 At current, there doesn't appear to be an implemented and/or documented approach to managing the server from _outside_ the active TTY, and running `docker attach opensim` seems to produce a blank prompt. You can `exec` into the container or edit the bound configuration script and restart the server to make changes, but in some server instances you might need to intercept the prompt.
 
-This Docker image comes with `screen` built in, to allow you to access the administration prompt. This also seems to help prevent against Docker from accidentally destroying the image (currently investigating).
+This Docker image comes with `screen` built in, to allow you to access the administration prompt. This also seems to help prevent against Docker from accidentally destroying the image (currently investigating). As a result this leaves the Docker log unfortunately blank, but you can access the logfile at `/opt/opensim/bin/OpenSim.log`.
 
 You can access a controllable OpenSimulator administration prompt by running:
 

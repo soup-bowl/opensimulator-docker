@@ -32,7 +32,7 @@ jobs:
             platforms: linux/amd64,linux/arm64
           - tag: "latest"
             folder: build/latest
-            file: Dockerfile.mono
+            file: Dockerfile
             platforms: linux/amd64,linux/arm64
 
     steps:
