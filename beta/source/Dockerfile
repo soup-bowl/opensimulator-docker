@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/sdk:8.0 as build
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 
 # Cache Bust to avoid caching skipping the latest commit
 ADD https://api.github.com/repos/opensim/opensim/git/refs/heads/master version.json
@@ -17,7 +17,8 @@ LABEL org.opencontainers.image.authors="code@soupbowl.io"
 LABEL org.opencontainers.image.source="https://github.com/soup-bowl/opensimulator-docker"
 LABEL org.opencontainers.image.licenses="MIT"
 
-RUN apt-get update && apt-get install -y apt-utils libgdiplus libc6-dev libsqlite3-dev screen uuid-runtime
+RUN apt-get update && apt-get install -y apt-utils libc6-dev libgdiplus libsqlite3-dev screen uuid-runtime \
+    && apt-get clean
 
 COPY --from=build /app /opt/opensim
 

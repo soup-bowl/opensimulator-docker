@@ -9,7 +9,7 @@ ARG OPENSIM_VERSION=0.9.3.0
 
 RUN apt-get update \
     && apt-get install -y apt-utils curl libc6-dev libgdiplus libsqlite3-dev screen uuid-runtime \
-    && rm -rf /var/lib/apt/lists/* /var/cache/apt/archives/*
+    && apt-get clean
 
 RUN mkdir /opt/opensim-tmp \
     && curl "http://opensimulator.org/dist/opensim-${OPENSIM_VERSION}.tar.gz" | tar xzf - -C /opt/opensim-tmp \

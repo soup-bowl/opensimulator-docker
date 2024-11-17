@@ -7,8 +7,8 @@ LABEL org.opencontainers.image.licenses="MIT"
 
 ENV OPENSIM_VERSION 0.9.2.2
 
-RUN apk add --no-cache bash curl uuidgen screen
-RUN apk add --no-cache mono --repository=https://dl-cdn.alpinelinux.org/alpine/edge/testing
+RUN apk add --no-cache bash curl screen uuidgen && \
+    apk add --no-cache mono --repository=https://dl-cdn.alpinelinux.org/alpine/edge/testing
 
 RUN mkdir /opt/opensim-tmp \
     && curl "http://opensimulator.org/dist/opensim-${OPENSIM_VERSION}.tar.gz"  | tar xzf - -C /opt/opensim-tmp \
