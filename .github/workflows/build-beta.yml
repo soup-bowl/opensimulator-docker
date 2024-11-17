@@ -32,13 +32,6 @@ jobs:
     steps:
       - name: Checkout Codebase
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - uses: sonarsource/sonarqube-scan-action@v3
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
 
       - name: Login to GitHub CR
         uses: docker/login-action@v3
