@@ -14,6 +14,9 @@ From the [OpenSimulator][os] site:
 
 > OpenSimulator is an open source multi-platform, multi-user 3D application server. It can be used to create a virtual environment (or world) which can be accessed through a variety of clients, on multiple protocols.
 
+> [!IMPORTANT]  
+> `0.9.3.0` (and in turn `latest`) is a significant change from 0.9.2.2 and below. Mono is no longer used, and has been replaced with the .NET Framework. This changes some aspects of the image, such as the ENTRYPOINT and source builds, so please test before switching over. If you wish to remain, 0.9.2.2 will continue to be updated and remains on the Mono base. For more information, see the [official release notes](http://opensimulator.org/wiki/0.9.3.0) and this [PR for Dockerfile changes](https://github.com/soup-bowl/opensimulator-docker/pull/8/files).
+
 This **unofficial** Docker configuration aims to assist in setting the server up for testing and general purpose use.
 
 **This is still experimental - thar be bugs!**
