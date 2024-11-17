@@ -15,22 +15,27 @@ jobs:
       matrix:
         include:
           - tag: "0.9.2.0"
+            version: "0.9.2.0"
             folder: build/latest
             file: Dockerfile.mono
             platforms: linux/amd64,linux/arm64
           - tag: "0.9.2.1"
+            version: "0.9.2.1"
             folder: build/latest
             file: Dockerfile.mono
             platforms: linux/amd64,linux/arm64
           - tag: "0.9.2.2"
+            version: "0.9.2.2"
             folder: build/latest
             file: Dockerfile.mono
             platforms: linux/amd64,linux/arm64
           - tag: "0.9.3.0"
+            version: "0.9.3.0"
             folder: build/latest
             file: Dockerfile
             platforms: linux/amd64,linux/arm64
           - tag: "latest"
+            version: "0.9.3.0"
             folder: build/latest
             file: Dockerfile
             platforms: linux/amd64,linux/arm64
@@ -70,6 +75,6 @@ jobs:
           platforms: ${{ matrix.platforms }}
           file: "${{ matrix.file }}"
           build-args: |
-            OPENSIM_VERSION=${{ matrix.tag }}
+            OPENSIM_VERSION=${{ matrix.version }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
