@@ -1,14 +1,13 @@
-FROM alpine:3.16
+FROM alpine:3.21
 
 LABEL org.opencontainers.image.title="OpenSimulator (unofficial)"
 LABEL org.opencontainers.image.authors="code@soupbowl.io"
 LABEL org.opencontainers.image.source="https://github.com/soup-bowl/opensimulator-docker"
 LABEL org.opencontainers.image.licenses="MIT"
 
-ENV OPENSIM_VERSION 0.9.2.2
+ENV OPENSIM_VERSION 0.9.3.0
 
-RUN apk add --no-cache bash curl screen uuidgen && \
-    apk add --no-cache mono --repository=https://dl-cdn.alpinelinux.org/alpine/edge/testing
+RUN apk add --no-cache bash curl dotnet8-runtime screen uuidgen
 
 RUN mkdir /opt/opensim-tmp \
     && curl "http://opensimulator.org/dist/opensim-${OPENSIM_VERSION}.tar.gz"  | tar xzf - -C /opt/opensim-tmp \
@@ -30,4 +29,4 @@ WORKDIR /opt/opensim/bin
 COPY docker-entrypoint.sh /usr/local/bin/
 
 ENTRYPOINT ["docker-entrypoint.sh"]
-CMD [ "mono", "./OpenSim.exe" ]
+CMD [ "screen", "-S", "OpenSim", "-D", "-m", "dotnet",  "OpenSim.dll" ]
