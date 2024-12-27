@@ -6,13 +6,16 @@ LABEL org.opencontainers.image.source="https://github.com/soup-bowl/opensimulato
 LABEL org.opencontainers.image.licenses="MIT"
 
 ARG OPENSIM_VERSION=0.9.3.0
+ARG OPENSIM_SHA1="a4bcd861626195af80cc1f962d3a2f4528859ad2"
 
 RUN apt-get update \
     && apt-get install -y apt-utils curl libc6-dev libgdiplus libsqlite3-dev screen uuid-runtime \
     && apt-get clean
 
 RUN mkdir /opt/opensim-tmp \
-    && curl "http://opensimulator.org/dist/opensim-${OPENSIM_VERSION}.tar.gz" | tar xzf - -C /opt/opensim-tmp \
+    && curl -o /opt/opensim-tmp/opensim.tar.gz "http://opensimulator.org/dist/opensim-${OPENSIM_VERSION}.tar.gz" \
+    && echo "${OPENSIM_SHA1}  /opt/opensim-tmp/opensim.tar.gz" | sha1sum -c - \
+    && tar xzf /opt/opensim-tmp/opensim.tar.gz -C /opt/opensim-tmp \
     && rm /opt/opensim-tmp/opensim*/bin/OpenSim.ini \
     && rm /opt/opensim-tmp/opensim*/bin/config-include/StandaloneCommon.ini \
     && rm /opt/opensim-tmp/opensim*/bin/config-include/storage/SQLiteStandalone.ini \
