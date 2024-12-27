@@ -1,4 +1,4 @@
-FROM docker.io/library/mono:6.12
+FROM docker.io/library/mono:6
 
 LABEL org.opencontainers.image.title="OpenSimulator (unofficial)"
 LABEL org.opencontainers.image.authors="code@soupbowl.io"
