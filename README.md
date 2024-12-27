@@ -117,7 +117,7 @@ If you pull from **0.9.2.2** or below, you will instead be using the [Mono Frame
 
 ## `soupbowl/opensimulator:alpine-beta`
 
-A bleeding edge variant using **Alpine** as the build image with **Mono** dependency added. Mono is currently not in the stable packages build, so this image is considered unstable. Progress can be tracked on the [#1 ticket](https://github.com/soup-bowl/opensimulator-docker/issues/1).
+A bleeding edge variant using **Alpine** as the build image. Progress can be tracked on the [#1 ticket](https://github.com/soup-bowl/opensimulator-docker/issues/1).
 
 **This will be revised/removed since OpenSimulator have moved away from Mono.**
 
