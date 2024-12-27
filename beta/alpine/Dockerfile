@@ -5,7 +5,7 @@ LABEL org.opencontainers.image.authors="code@soupbowl.io"
 LABEL org.opencontainers.image.source="https://github.com/soup-bowl/opensimulator-docker"
 LABEL org.opencontainers.image.licenses="MIT"
 
-ENV OPENSIM_VERSION 0.9.3.0
+ENV OPENSIM_VERSION=0.9.3.0
 
 RUN apk add --no-cache bash curl dotnet8-runtime screen uuidgen
 
