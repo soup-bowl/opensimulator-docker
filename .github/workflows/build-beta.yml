@@ -24,10 +24,6 @@ jobs:
             folder: beta/source
             file: Dockerfile
             platforms: linux/amd64
-          - tag: dotnet6
-            folder: beta/source
-            file: Dockerfile.dotnet6
-            platforms: linux/amd64,linux/arm64
 
     steps:
       - name: Checkout Codebase

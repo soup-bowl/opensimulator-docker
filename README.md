@@ -123,9 +123,7 @@ A bleeding edge variant using **Alpine** as the build image. Progress can be tra
 
 ## `soupbowl/opensimulator:source`
 
-Gets the latest available code from the OpenSimulator repository, and constructs a bleeding edge container. Configuration is not different, but this is **compiled from source** and should be **treated as highly unstable**. These are built **4 times daily**, providing a change has occurred.
-
-**Note**: This was originally building from the `dotnet6` branch of the OpenSimulator repository. This image is now truly built from source, but if you want to use the original-type image, it is now built to the container tag `dotnet6`.
+Gets the latest available code from the OpenSimulator repository, and constructs a bleeding edge container. Configuration is not different, but this is **compiled from source** and should be **treated as highly unstable**. These are built **on demand**, when a detected changre has occurred.
 
 # Source Code
 
