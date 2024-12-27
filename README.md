@@ -21,6 +21,18 @@ This **unofficial** Docker configuration aims to assist in setting the server up
 > [!IMPORTANT]  
 > 0.9.3.0 (and in turn latest) is a significant change from 0.9.2.2 and below. Mono is no longer used, and has been replaced with the .NET Framework. This changes some aspects of the image, such as the ENTRYPOINT and source builds, so please test before switching over. If you wish to remain, 0.9.2.2 will continue to be updated and remains on the Mono base. For more information, see the [official release notes](http://opensimulator.org/wiki/0.9.3.0) and this [PR for Dockerfile changes](https://github.com/soup-bowl/opensimulator-docker/pull/8/files).
 
+# Supported tags and respective `Dockerfile` links
+
+-	[`latest`, `0.9`, `0.9.3`, `0.9.3.0`](https://github.com/soup-bowl/opensimulator-docker/blob/main/build/latest/Dockerfile)
+
+-	[`0.9.2`, `0.9.2.2`](https://github.com/soup-bowl/opensimulator-docker/blob/main/build/latest/Dockerfile.mono)
+
+-	[`0.9.2.1`](https://github.com/soup-bowl/opensimulator-docker/blob/main/build/latest/Dockerfile.mono)
+
+-	[`source`](https://github.com/soup-bowl/opensimulator-docker/blob/main/beta/source/Dockerfile)
+
+-	[`alpine-beta`](https://github.com/soup-bowl/opensimulator-docker/blob/main/beta/alpine/Dockerfile)
+
 # Usage
 
 ```bash
