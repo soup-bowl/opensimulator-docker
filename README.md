@@ -7,7 +7,7 @@
 </p>
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/a1ae88ba-2eb5-425f-b495-f3895e45c024" alt="Screenshot from inside the Firestorm Metaverse client, showing a woman with a floating nametag 'foo bar' staring out into the ocean, standing upon a small mound island" />
+  <img src="https://f.subo.dev/i/o/2.png" alt="Screenshot from inside the Firestorm Metaverse client, showing a woman with a floating nametag 'foo bar' staring out into the ocean, standing upon a small mound island" />
 </p>
 
 From the [OpenSimulator][os] site:
