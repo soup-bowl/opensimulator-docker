@@ -7,6 +7,7 @@ on:
     paths:
       - "beta/**"
   repository_dispatch:
+    # Triggered by a NR script inspecting changes to the 'master' branch of OpenSimulator.
     types: [srcbuild]
   workflow_dispatch:
 
