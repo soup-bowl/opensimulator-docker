@@ -10,10 +10,17 @@ fileExistenceTests:
     path: '/usr/local/bin/docker-entrypoint.sh'
     shouldExist: true
     isExecutableBy: 'owner'
-# commandTests:
-#   - name: "Run OpenSimulator"
-#     setup: [["docker-entrypoint.sh"]]
-#     command: "timeout"
-#     args: ["-s", "SIGINT", "10s", "dotnet", "OpenSim.dll"]
+commandTests:
+  - name: "Check Entrypoint"
+    command: "docker-entrypoint.sh"
+    expectedError:
+      - ".*No OpenSim configuration found.*"
+      - ".*No Grid Common configuration found.*"
+      - ".*No region details found.*"
+  # Does not work with allocateTty, but the software needs a tty. Poss. a bug in the test framework?
+  # - name: "Run OpenSimulator"
+  #   setup: [["docker-entrypoint.sh"]]
+  #   command: "timeout"
+  #   args: ["-s", "SIGINT", "10s", "dotnet", "OpenSim.dll"]
 containerRunOptions:
-  allocateTty: true
+  # allocateTty: true
