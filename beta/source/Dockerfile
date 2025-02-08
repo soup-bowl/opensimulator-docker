@@ -1,16 +1,17 @@
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+
+ARG DOTNET_VERSION=8.0
+FROM mcr.microsoft.com/dotnet/sdk:${DOTNET_VERSION} AS build
 
 # Cache Bust to avoid caching skipping the latest commit
 ADD https://api.github.com/repos/opensim/opensim/git/refs/heads/master version.json
-RUN git clone https://github.com/opensim/opensim.git /app
+RUN git clone --depth 1 --branch master https://github.com/opensim/opensim.git /app
 WORKDIR /app
-RUN git checkout master
+RUN rm -rf .git && \
+    ./runprebuild.sh && \
+    ./compile.sh && \
+    rm bin/config-include/storage/SQLiteStandalone.ini
 
-RUN ./runprebuild.sh && ./compile.sh
-
-RUN rm bin/config-include/storage/SQLiteStandalone.ini
-
-FROM mcr.microsoft.com/dotnet/runtime:8.0
+FROM mcr.microsoft.com/dotnet/runtime:${DOTNET_VERSION}
 
 LABEL org.opencontainers.image.title="OpenSimulator (unofficial)"
 LABEL org.opencontainers.image.authors="code@soupbowl.io"
