@@ -54,6 +54,16 @@ jobs:
             file: Dockerfile
             platforms: linux/amd64,linux/arm64
             sha1: a4bcd861626195af80cc1f962d3a2f4528859ad2
+          - version: "0.9.3.0-noscreen"
+            tag: >
+              soupbowl/opensimulator:0.9.3-noscreen,
+              soupbowl/opensimulator:0.9.3.0-noscreen,
+              ghcr.io/soup-bowl/opensimulator-docker:0.9.3-noscreen,
+              ghcr.io/soup-bowl/opensimulator-docker:0.9.3.0-noscreen,
+            folder: build/latest
+            file: Dockerfile.noscreen
+            platforms: linux/amd64,linux/arm64
+            sha1: a4bcd861626195af80cc1f962d3a2f4528859ad2
 
     steps:
       - name: Checkout Codebase

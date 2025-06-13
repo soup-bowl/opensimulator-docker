@@ -25,6 +25,8 @@ This **unofficial** Docker configuration aims to assist in setting the server up
 
 -	[`latest`, `0.9`, `0.9.3`, `0.9.3.0`](https://github.com/soup-bowl/opensimulator-docker/blob/main/build/latest/Dockerfile)
 
+-	[`0.9.3-noscreen`, `0.9.3.0-noscreen`](https://github.com/soup-bowl/opensimulator-docker/blob/main/build/latest/Dockerfile.noscreen)
+
 -	[`0.9.2`, `0.9.2.2`](https://github.com/soup-bowl/opensimulator-docker/blob/main/build/latest/Dockerfile.mono)
 
 -	[`0.9.2.1`](https://github.com/soup-bowl/opensimulator-docker/blob/main/build/latest/Dockerfile.mono)
@@ -126,6 +128,10 @@ Variant names are listed in Dockerhub format. They are also available from the G
 The latest OpenSimulator image build using [official .NET 8 image](https://mcr.microsoft.com/en-us/product/dotnet/runtime/about) as the build reference.
 
 If you pull from **0.9.2.2** or below, you will instead be using the [Mono Framework](https://hub.docker.com/_/mono/).
+
+## `soupbowl/opensimulator:<version>-noscreen`
+
+Starting from **0.9.3.0**, until [#9 is resolved](https://github.com/soup-bowl/opensimulator-docker/issues/9), there is a build of the Dotnet editions without screen. This is **temporary** and will be removed once a solution is found, so there is no latest tag to avoid dependency. All feedback on experience is welcome on issue #9.
 
 ## `soupbowl/opensimulator:alpine-beta`
 
