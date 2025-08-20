@@ -17,13 +17,15 @@ jobs:
     strategy:
       matrix:
         include:
-          - tag: alpine-beta
+          - version: "0.9.3.0"
+            tag: alpine-beta
             folder: beta/alpine
             file: Dockerfile
             platforms: linux/amd64,linux/arm64
-          - tag: source
-            folder: beta/source
-            file: Dockerfile
+          - version: master
+            tag: source
+            folder: build/latest
+            file: Dockerfile.source
             platforms: linux/amd64
 
     steps:
@@ -61,5 +63,7 @@ jobs:
             ghcr.io/soup-bowl/opensimulator-docker:${{ matrix.tag }},
           platforms: ${{ matrix.platforms }}
           file: "${{ matrix.file }}"
+          build-args: |
+            OPENSIM_VERSION=${{ matrix.version }}
           cache-from: type=gha
           cache-to: type=gha,mode=max

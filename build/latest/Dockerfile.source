@@ -2,9 +2,10 @@
 ARG DOTNET_VERSION=8.0
 FROM mcr.microsoft.com/dotnet/sdk:${DOTNET_VERSION} AS build
 
+ARG OPENSIM_VERSION=0.9.3.0
 # Cache Bust to avoid caching skipping the latest commit
 ADD https://api.github.com/repos/opensim/opensim/git/refs/heads/master version.json
-RUN git clone --depth 1 --branch master https://github.com/opensim/opensim.git /app
+RUN git clone --depth 1 --branch "${OPENSIM_VERSION}" https://github.com/opensim/opensim.git /app
 WORKDIR /app
 RUN rm -rf .git && \
     ./runprebuild.sh && \

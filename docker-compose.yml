@@ -1,4 +1,3 @@
-version: '3.6'
 services:
   db:
     image: docker.io/library/mariadb:10.5
@@ -11,10 +10,14 @@ services:
     environment:
       MYSQL_DATABASE: metaverse
       MYSQL_ROOT_PASSWORD: password
+
   metaverse:
     container_name: opensim
     build:
-      context: .
+      context: ./build/latest
+      dockerfile: Dockerfile.source
+      args:
+        - OPENSIM_VERSION=master
     depends_on:
       db:
         condition: service_healthy
