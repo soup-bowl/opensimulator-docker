@@ -30,11 +30,11 @@ This **unofficial** Docker configuration aims to assist in setting the server up
 
 -	[`0.9.3-noscreen`, `0.9.3.0-noscreen`](https://github.com/soup-bowl/opensimulator-docker/blob/main/build/latest/Dockerfile.noscreen)
 
--	[`0.9.2`, `0.9.2.2`](https://github.com/soup-bowl/opensimulator-docker/blob/main/build/latest/Dockerfile.mono)
+-	[`0.9.2`, `0.9.2.2`](https://github.com/soup-bowl/opensimulator-docker/blob/main/build/latest/Dockerfile.mono) (unsupported)
 
--	[`0.9.2.1`](https://github.com/soup-bowl/opensimulator-docker/blob/main/build/latest/Dockerfile.mono)
+-	[`0.9.2.1`](https://github.com/soup-bowl/opensimulator-docker/blob/main/build/latest/Dockerfile.mono) (unsupported)
 
--	[`source`](https://github.com/soup-bowl/opensimulator-docker/blob/main/beta/source/Dockerfile)
+-	[`source`](https://github.com/soup-bowl/opensimulator-docker/blob/main/beta/source/Dockerfile) (unsupported)
 
 -	[`alpine-beta`](https://github.com/soup-bowl/opensimulator-docker/blob/main/beta/alpine/Dockerfile)
 
@@ -130,7 +130,7 @@ Variant names are listed in Dockerhub format. They are also available from the G
 
 The latest OpenSimulator image build using [official .NET 8 image](https://mcr.microsoft.com/en-us/product/dotnet/runtime/about) as the build reference.
 
-If you pull from **0.9.2.2** or below, you will instead be using the [Mono Framework](https://hub.docker.com/_/mono/).
+If you pull from **0.9.2.2** or below, you will instead be using the [Mono Framework](https://hub.docker.com/_/mono/). **As of August 2025 these are not supported** as Mono framework has been discontinued.
 
 ## `soupbowl/opensimulator:<version>-noscreen`
 
