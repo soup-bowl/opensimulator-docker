@@ -19,7 +19,7 @@ This **unofficial** Docker configuration aims to assist in setting the server up
 **This is still experimental - thar be bugs!**
 
 > [!IMPORTANT]  
-> **[Mono has been discontinued](https://github.com/soup-bowl/opensimulator-docker/issues/10)** - for the foreseeable 0.9.2.2 and blow images **will not be updated**. Plan to migrate as soon as possible.
+> **[Mono has been discontinued](https://github.com/soup-bowl/opensimulator-docker/issues/10)** - for the foreseeable 0.9.2.2 and below images **will not be updated**. Until a maintainer or suitable alternative is found, they are **not supported**.
 
 > [!WARNING]  
 > 0.9.3.0 (and in turn latest) is a significant change from 0.9.2.2 and below. Mono is no longer used, and has been replaced with the .NET Framework. This changes some aspects of the image, such as the ENTRYPOINT and source builds, so please test before switching over. If you wish to remain, 0.9.2.2 will continue to be updated and remains on the Mono base. For more information, see the [official release notes](http://opensimulator.org/wiki/0.9.3.0) and this [PR for Dockerfile changes](https://github.com/soup-bowl/opensimulator-docker/pull/8/files).
