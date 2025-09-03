@@ -1,5 +1,7 @@
 FROM mcr.microsoft.com/dotnet/runtime:8.0
 
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
 LABEL \
 	org.opencontainers.image.title="OpenSimulator (unofficial)" \
 	org.opencontainers.image.authors="code@soupbowl.io" \
@@ -10,8 +12,9 @@ ARG OPENSIM_VERSION=0.9.3.0
 ARG OPENSIM_SHA1="a4bcd861626195af80cc1f962d3a2f4528859ad2"
 
 RUN apt-get update \
-	&& apt-get install -y apt-utils curl libc6-dev libgdiplus libsqlite3-dev screen uuid-runtime \
+	&& apt-get install --no-install-recommends -y apt-utils curl libc6-dev libgdiplus libsqlite3-dev screen uuid-runtime \
 	&& apt-get clean \
+	&& rm -rf /var/lib/apt/lists/* \
 	&& mkdir /opt/opensim-tmp \
 	&& curl -o /opt/opensim-tmp/opensim.tar.gz "http://opensimulator.org/dist/opensim-${OPENSIM_VERSION}.tar.gz" \
 	&& echo "${OPENSIM_SHA1}  /opt/opensim-tmp/opensim.tar.gz" | sha1sum -c - \
