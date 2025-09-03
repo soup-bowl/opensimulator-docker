@@ -4,27 +4,28 @@ FROM mcr.microsoft.com/dotnet/sdk:${DOTNET_VERSION} AS build
 
 ARG OPENSIM_VERSION=0.9.3.0
 # Cache Bust to avoid caching skipping the latest commit
-ADD https://api.github.com/repos/opensim/opensim/git/refs/heads/master version.json
+ADD https://api.github.com/repos/opensim/opensim/git/refs/heads/${OPENSIM_VERSION} version.json
 RUN git clone --depth 1 --branch "${OPENSIM_VERSION}" https://github.com/opensim/opensim.git /app
 WORKDIR /app
 RUN rm -rf .git && \
-    ./runprebuild.sh && \
-    ./compile.sh && \
-    rm bin/config-include/storage/SQLiteStandalone.ini
+	./runprebuild.sh && \
+	./compile.sh && \
+	rm bin/config-include/storage/SQLiteStandalone.ini
+COPY defaults  bin/defaults
 
 FROM mcr.microsoft.com/dotnet/runtime:${DOTNET_VERSION}
 
-LABEL org.opencontainers.image.title="OpenSimulator (unofficial)"
-LABEL org.opencontainers.image.authors="code@soupbowl.io"
-LABEL org.opencontainers.image.source="https://github.com/soup-bowl/opensimulator-docker"
-LABEL org.opencontainers.image.licenses="MIT"
+LABEL \
+	org.opencontainers.image.title="OpenSimulator (unofficial)" \
+	org.opencontainers.image.authors="code@soupbowl.io" \
+	org.opencontainers.image.source="https://github.com/soup-bowl/opensimulator-docker" \
+	org.opencontainers.image.licenses="MIT"
 
-RUN apt-get update && apt-get install -y apt-utils libc6-dev libgdiplus libsqlite3-dev screen uuid-runtime \
-    && apt-get clean
+RUN apt-get update && \
+	apt-get install -y apt-utils libc6-dev libgdiplus libsqlite3-dev screen uuid-runtime && \
+	apt-get clean
 
 COPY --from=build /app /opt/opensim
-
-COPY defaults  /opt/opensim/bin/defaults
 
 EXPOSE 9000
 

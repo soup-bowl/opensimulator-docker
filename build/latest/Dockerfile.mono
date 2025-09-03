@@ -1,26 +1,26 @@
 FROM docker.io/library/mono:6
 
-LABEL org.opencontainers.image.title="OpenSimulator (unofficial)"
-LABEL org.opencontainers.image.authors="code@soupbowl.io"
-LABEL org.opencontainers.image.source="https://github.com/soup-bowl/opensimulator-docker"
-LABEL org.opencontainers.image.licenses="MIT"
+LABEL \
+	org.opencontainers.image.title="OpenSimulator (unofficial)" \
+	org.opencontainers.image.authors="code@soupbowl.io" \
+	org.opencontainers.image.source="https://github.com/soup-bowl/opensimulator-docker" \
+	org.opencontainers.image.licenses="MIT"
 
 ARG OPENSIM_VERSION=0.9.2.2
 ARG OPENSIM_SHA1="b280d109cf04755a02db1c729af5a5e4160d1ce6"
 
 RUN apt-get update \
-    && apt-get install -y curl screen uuid-runtime \
-    && apt-get clean
-
-RUN mkdir /opt/opensim-tmp \
-    && curl -o /opt/opensim-tmp/opensim.tar.gz "http://opensimulator.org/dist/opensim-${OPENSIM_VERSION}.tar.gz" \
-    && echo "${OPENSIM_SHA1}  /opt/opensim-tmp/opensim.tar.gz" | sha1sum -c - \
-    && tar xzf /opt/opensim-tmp/opensim.tar.gz -C /opt/opensim-tmp \
-    && rm /opt/opensim-tmp/opensim*/bin/OpenSim.ini \
-    && rm /opt/opensim-tmp/opensim*/bin/config-include/StandaloneCommon.ini \
-    && rm /opt/opensim-tmp/opensim*/bin/config-include/storage/SQLiteStandalone.ini \
-    && mkdir /opt/opensim \
-    && mv /opt/opensim-tmp/opensim*/* /opt/opensim
+	&& apt-get install -y curl screen uuid-runtime \
+	&& apt-get clean \
+	&& mkdir /opt/opensim-tmp \
+	&& curl -o /opt/opensim-tmp/opensim.tar.gz "http://opensimulator.org/dist/opensim-${OPENSIM_VERSION}.tar.gz" \
+	&& echo "${OPENSIM_SHA1}  /opt/opensim-tmp/opensim.tar.gz" | sha1sum -c - \
+	&& tar xzf /opt/opensim-tmp/opensim.tar.gz -C /opt/opensim-tmp \
+	&& rm /opt/opensim-tmp/opensim*/bin/OpenSim.ini \
+	&& rm /opt/opensim-tmp/opensim*/bin/config-include/StandaloneCommon.ini \
+	&& rm /opt/opensim-tmp/opensim*/bin/config-include/storage/SQLiteStandalone.ini \
+	&& mkdir /opt/opensim \
+	&& mv /opt/opensim-tmp/opensim*/* /opt/opensim
 
 COPY defaults  /opt/opensim/bin/defaults
 
