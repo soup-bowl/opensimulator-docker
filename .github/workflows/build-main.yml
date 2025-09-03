@@ -18,7 +18,7 @@ jobs:
           # - version: "0.9.2.0"
           #   tag: >
           #     soupbowl/opensimulator:0.9.2.0,
-          #     ghcr.io/soup-bowl/opensimulator-docker:0.9.2.0,
+          #     ghcr.io/${{ github.repository }}:0.9.2.0,
           #   folder: build/latest
           #   file: Dockerfile.mono
           #   platforms: linux/amd64,linux/arm64
@@ -26,7 +26,7 @@ jobs:
           # - version: "0.9.2.1"
           #   tag: >
           #     soupbowl/opensimulator:0.9.2.1,
-          #     ghcr.io/soup-bowl/opensimulator-docker:0.9.2.1,
+          #     ghcr.io/${{ github.repository }}:0.9.2.1,
           #   folder: build/latest
           #   file: Dockerfile.mono
           #   platforms: linux/amd64,linux/arm64
@@ -35,8 +35,8 @@ jobs:
           #   tag: >
           #     soupbowl/opensimulator:0.9.2,
           #     soupbowl/opensimulator:0.9.2.2,
-          #     ghcr.io/soup-bowl/opensimulator-docker:0.9.2,
-          #     ghcr.io/soup-bowl/opensimulator-docker:0.9.2.2,
+          #     ghcr.io/${{ github.repository }}:0.9.2,
+          #     ghcr.io/${{ github.repository }}:0.9.2.2,
           #   folder: build/latest
           #   file: Dockerfile.mono
           #   platforms: linux/amd64,linux/arm64
@@ -47,10 +47,10 @@ jobs:
               soupbowl/opensimulator:0.9,
               soupbowl/opensimulator:0.9.3,
               soupbowl/opensimulator:0.9.3.0,
-              ghcr.io/soup-bowl/opensimulator-docker:latest,
-              ghcr.io/soup-bowl/opensimulator-docker:0.9,
-              ghcr.io/soup-bowl/opensimulator-docker:0.9.3,
-              ghcr.io/soup-bowl/opensimulator-docker:0.9.3.0,
+              ghcr.io/${{ github.repository }}:latest,
+              ghcr.io/${{ github.repository }}:0.9,
+              ghcr.io/${{ github.repository }}:0.9.3,
+              ghcr.io/${{ github.repository }}:0.9.3.0,
             folder: build/latest
             file: Dockerfile
             platforms: linux/amd64,linux/arm64
@@ -59,8 +59,8 @@ jobs:
             tag: >
               soupbowl/opensimulator:0.9.3-noscreen,
               soupbowl/opensimulator:0.9.3.0-noscreen,
-              ghcr.io/soup-bowl/opensimulator-docker:0.9.3-noscreen,
-              ghcr.io/soup-bowl/opensimulator-docker:0.9.3.0-noscreen,
+              ghcr.io/${{ github.repository }}:0.9.3-noscreen,
+              ghcr.io/${{ github.repository }}:0.9.3.0-noscreen,
             folder: build/latest
             file: Dockerfile.noscreen
             platforms: linux/amd64,linux/arm64
@@ -75,7 +75,7 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
-          password: ${{ secrets.CR_PAT }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Login to Docker Hub
         uses: docker/login-action@v3
