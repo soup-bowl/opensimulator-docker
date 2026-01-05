@@ -24,13 +24,13 @@ jobs:
         include:
           - version: "0.9.3.0"
             tag: alpine-beta
-            folder: beta/alpine
-            file: Dockerfile
+            folder: build/latest
+            file: Dockerfile.alpine
             platforms: linux/amd64,linux/arm64
           - version: master
             tag: source
             folder: build/latest
-            file: Dockerfile.source
+            file: Dockerfile
             platforms: linux/amd64
 
     steps:
