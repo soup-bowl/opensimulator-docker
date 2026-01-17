@@ -1,6 +1,5 @@
 
-# Build stage: compile Mono from WineHQ mono-6.14.1 source on Ubuntu
-FROM ubuntu:22.04 AS mono-build
+FROM debian:bookworm-slim AS mono-build
 ENV DEBIAN_FRONTEND=noninteractive
 
 ARG MONO_VERSION=mono-6.14.1
@@ -15,8 +14,6 @@ RUN apt-get update \
 
 WORKDIR /tmp
 
-# Clone the Mono repository (with submodules) and build it. Using git
-# ensures external/submodule directories like bdwgc are fetched.
 RUN set -eux; \
 	git clone --depth 1 --branch "${MONO_VERSION}" --recursive https://gitlab.winehq.org/mono/mono.git /mono-src; \
 	cd /mono-src; \
@@ -26,8 +23,7 @@ RUN set -eux; \
 	rm -rf /mono-src
 
 
-# Final image: start from a minimal Ubuntu and copy only the runtime files
-FROM ubuntu:22.04
+FROM debian:bookworm-slim
 ENV DEBIAN_FRONTEND=noninteractive
 
 LABEL \
