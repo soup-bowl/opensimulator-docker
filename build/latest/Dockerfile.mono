@@ -71,5 +71,5 @@ WORKDIR /opt/opensim/bin
 
 COPY docker-entrypoint.sh /usr/local/bin/
 
-#ENTRYPOINT ["docker-entrypoint.sh"]
-#CMD [ "mono", "./OpenSim.exe" ]
+ENTRYPOINT ["docker-entrypoint.sh"]
+CMD [ "mono", "./OpenSim.exe" ]
