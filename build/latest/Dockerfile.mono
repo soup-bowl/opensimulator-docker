@@ -45,8 +45,7 @@ COPY --from=mono-build /opt/mono /opt/mono
 # Make mono available on PATH and install runtime utilities
 RUN apt-get update \
 	&& apt-get install --no-install-recommends -y ca-certificates curl screen uuid-runtime libglib2.0-0 libgnutls30 tzdata \
-	 && ln -s /opt/mono/bin/mono /usr/local/bin/mono \
-		 libgdiplus libfontconfig1 libx11-6 \
+	&& ln -s /opt/mono/bin/mono /usr/local/bin/mono \
 	&& ln -s /opt/mono/bin/mono-sgen /usr/local/bin/mono-sgen || true \
 	&& apt-get clean \
 	&& rm -rf /var/lib/apt/lists/*
