@@ -34,7 +34,7 @@ This **unofficial** Docker configuration aims to assist in setting the server up
 
 # Usage
 
-Versions 0.9.3.0 and above use .NET, and due to a bug under investigation (see #9) the image uses `screen` to prevent the session from ending unexpectedly. Versions 0.9.2.2 and below use Mono. Please see Limitations for more information.
+Versions 0.9.3.0 and above use .NET, and due to a bug under investigation ([see #9][I9]) the image uses `screen` to prevent the session from ending unexpectedly. Versions 0.9.2.2 and below use Mono. Please see Limitations for more information.
 
 ```bash
 docker run -it -d --name opensim -p 9000:9000 -p 9000:9000/udp soupbowl/opensimulator:latest
@@ -130,7 +130,7 @@ If you pull from **0.9.2.2** or below, you will instead be using the [Mono Frame
 
 ## `soupbowl/opensimulator:<version>-noscreen`
 
-Starting from **0.9.3.0**, until [#9 is resolved](https://github.com/soup-bowl/opensimulator-docker/issues/9), there is a build of the Dotnet editions without screen. This is **temporary** and will be removed once a solution is found, so there is no latest tag to avoid dependency. All feedback on experience is welcome on issue #9.
+Starting from **0.9.3.0**, until [#9 is resolved](https://github.com/soup-bowl/opensimulator-docker/issues/9), there is a build of the Dotnet editions without screen. This is **temporary** and will be removed once a solution is found, so there is no latest tag to avoid dependency. All feedback on experience is welcome on [issue #9][I9].
 
 ## `soupbowl/opensimulator:alpine-beta`
 
@@ -151,3 +151,4 @@ The source code of the Docker image is [found on the GitHub repository][src]. Yo
 [grid]: https://wiki.secondlife.com/wiki/Land#Grid
 [estate]: https://wiki.secondlife.com/wiki/Land#Estate
 [region]: https://wiki.secondlife.com/wiki/Land#Region
+[I9]: https://github.com/soup-bowl/opensimulator-docker/issues/9
