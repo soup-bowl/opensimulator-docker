@@ -21,6 +21,7 @@ LABEL \
 	org.opencontainers.image.source="https://github.com/soup-bowl/opensimulator-docker" \
 	org.opencontainers.image.licenses="MIT"
 
+# hadolint ignore=DL3008
 RUN apt-get update && \
 	apt-get install --no-install-recommends -y apt-utils libc6-dev libgdiplus libsqlite3-dev screen uuid-runtime && \
 	apt-get clean && \
