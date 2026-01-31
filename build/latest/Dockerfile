@@ -33,5 +33,21 @@ WORKDIR /opt/opensim/bin
 
 COPY docker-entrypoint.sh /usr/local/bin/
 
+ENV \
+	OS_BASE_HOSTNAME="localhost" \
+	OS_GRID_NAME="My OpenSimulator Grid" \
+	OS_GRID_WELCOME="Welcome to my OpenSimulator grid!" \
+	OS_REGION_NAME="My Region" \
+	OS_ESTATE_NAME="My Estate" \
+	OS_ESTATE_OWNER_NAME="Foo Bar" \
+	OS_ESTATE_OWNER_UUID="00000000-0000-0000-0000-000000000001" \
+	OS_DATABASE_ENGINE="sqlite" \
+	OS_MYSQL_SERVER="localhost" \
+	OS_MYSQL_DATABASE="opensim" \
+	OS_MYSQL_USERNAME="opensim" \
+	OS_PHYSICS_ENGINE="OpenDynamicsEngine"
+# - OS_ESTATE_OWNER_PASSWORD
+# - OS_MYSQL_PASSWORD
+
 ENTRYPOINT ["docker-entrypoint.sh"]
 CMD [ "screen", "-S", "OpenSim", "-D", "-m", "dotnet",  "OpenSim.dll" ]
