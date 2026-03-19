@@ -25,7 +25,7 @@ EXPOSE 9000
 
 WORKDIR /opt/opensim/bin
 
-COPY docker-entrypoint.sh /usr/local/bin/
+COPY docker-entrypoint.ash /usr/local/bin/docker-entrypoint.sh
 
 ENTRYPOINT ["docker-entrypoint.sh"]
 CMD [ "screen", "-S", "OpenSim", "-D", "-m", "dotnet",  "OpenSim.dll" ]
