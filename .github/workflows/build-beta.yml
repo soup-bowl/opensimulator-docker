@@ -22,11 +22,6 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - version: "0.9.3.0"
-            tag: alpine-beta
-            folder: beta/alpine
-            file: Dockerfile
-            platforms: linux/amd64,linux/arm64
           - version: master
             tag: source
             folder: build/latest
