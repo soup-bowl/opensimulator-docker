@@ -1,6 +1,34 @@
 #!/usr/bin/env sh
 set -eu
 
+# Reads a Docker secret from /run/secrets/<name> if the _FILE variant is set.
+# _FILE takes priority over the plain environment variable.
+file_env() {
+	var="$1"
+	# Check it's a valid variable and not just a vibed-in donut.
+	case "$var" in
+		*[!A-Z0-9_]*) printf '%s\n' "ERROR: Invalid variable name passed to file_env: $var" >&2; exit 1 ;;
+	esac
+	file_var="${var}_FILE"
+	eval val="\${$var:-}"
+	eval file_val="\${$file_var:-}"
+
+	if [ -n "$file_val" ]; then
+		if [ -r "$file_val" ]; then
+			val="$(cat "$file_val")"
+		else
+			printf '%s\n' "ERROR: Secret file '$file_val' (from ${file_var}) is not readable." >&2
+			exit 1
+		fi
+	fi
+
+	export "$var"="$val"
+	unset "$file_var" 2>/dev/null || true
+}
+
+file_env MYSQL_PASSWORD
+file_env ESTATE_OWNER_PASSWORD
+
 chown -R "$(id -u):$(id -g)" defaults
 
 if [ ! -e OpenSim.ini ]; then
