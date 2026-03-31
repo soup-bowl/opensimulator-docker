@@ -13,7 +13,7 @@ ARG OPENSIM_SHA1="a4bcd861626195af80cc1f962d3a2f4528859ad2"
 
 # hadolint ignore=DL3008
 RUN apt-get update \
-	&& apt-get install --no-install-recommends -y apt-utils curl libc6-dev libgdiplus libsqlite3-dev screen uuid-runtime \
+	&& apt-get install --no-install-recommends -y apt-utils curl libc6-dev libgdiplus libsqlite3-dev uuid-runtime \
 	&& apt-get clean \
 	&& rm -rf /var/lib/apt/lists/* \
 	&& mkdir /opt/opensim-tmp \
@@ -35,4 +35,4 @@ WORKDIR /opt/opensim/bin
 COPY docker-entrypoint.sh /usr/local/bin/
 
 ENTRYPOINT ["docker-entrypoint.sh"]
-CMD [ "screen", "-S", "OpenSim", "-D", "-m", "dotnet",  "OpenSim.dll" ]
+CMD [ "dotnet", "OpenSim.dll", "-console=basic" ]
