@@ -3,6 +3,10 @@ set -eu
 
 chown -R "$(id -u):$(id -g)" defaults
 
+printf 'Notice: The dotnet-branch of the Docker image has moved away from using screen. Check the repository for usage instructions.\n' >&2
+printf 'https://github.com/soup-bowl/opensimulator-docker\n' >&2
+printf 'If you wish to continue with screen for now, switch tag to `0.9.3.0-screen`.\n' >&2
+
 if [ ! -e OpenSim.ini ]; then
 	printf '%s\n' "INFO: No OpenSim configuration found, pulling one together." >&2
 	cp defaults/OpenSim.ini OpenSim.ini
