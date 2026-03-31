@@ -79,7 +79,7 @@ To aid the use of SQLite mode with persistent data, the default configuration ha
 docker run -d --name opensim -p 9000:9000 -p 9000:9000/udp -v /path/on/your/system:/opt/opensim/bin/sqlite-database  soupbowl/opensimulator:latest
 ```
 
-# Limitations
+# Limitations and Troubleshooting
 
 ## Physics in ARM
 
@@ -95,6 +95,10 @@ Currently, **Physics environments do not appear to be natively supported**, and 
 Alternatively, a suitable drop-in library in `lib64/libBulletSim-aarch64.so` for BulletSim Physics could work, but may be unsupported.
 
 **I'm keen to support ARM architecture to the bounds of OpenSimulator. If you have any experience on this, please reach out to me.**
+
+## `Command error: System.NullReferenceException: Object reference not set to an instance of an object.`
+
+This occurs because the terminal is expecting a method of input, but isn't able to detect one. This is why the command requires `-it`, and the compose needs `tty` and `stdin_open`.
 
 # Examples
 
