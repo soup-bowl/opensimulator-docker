@@ -75,8 +75,8 @@ To aid the use of SQLite mode with persistent data, the default configuration ha
 
 (Note that if you use a custom `SQLiteStandalone.ini` file, this will not happen).
 
-```
-docker run -d --name opensim -p 9000:9000 -p 9000:9000/udp -v /path/on/your/system:/opt/opensim/bin/sqlite-database  soupbowl/opensimulator:latest
+```bash
+docker run -it -d --name opensim -p 9000:9000 -p 9000:9000/udp -v /path/on/your/system:/opt/opensim/bin/sqlite-database  soupbowl/opensimulator:latest
 ```
 
 # Limitations and Troubleshooting
