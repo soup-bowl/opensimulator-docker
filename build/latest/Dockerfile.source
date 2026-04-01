@@ -10,6 +10,8 @@ WORKDIR /app
 RUN rm -rf .git && \
 	./runprebuild.sh && \
 	./compile.sh && \
+    find . -name "*.pdb" -delete && \
+	rm -r *prebuild* compile.sh ThirdParty TESTING.txt Prebuild OpenSim* Makefile BUILDING.md && \
 	rm bin/config-include/storage/SQLiteStandalone.ini
 COPY defaults  bin/defaults
 
@@ -23,7 +25,7 @@ LABEL \
 
 # hadolint ignore=DL3008
 RUN apt-get update && \
-	apt-get install --no-install-recommends -y apt-utils libc6-dev libgdiplus libsqlite3-dev uuid-runtime && \
+	apt-get install --no-install-recommends -y libc6-dev libgdiplus libsqlite3-dev uuid-runtime && \
 	apt-get clean && \
 	rm -rf /var/lib/apt/lists/*
 
