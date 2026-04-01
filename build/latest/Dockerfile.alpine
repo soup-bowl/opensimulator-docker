@@ -2,13 +2,14 @@ FROM alpine:3.21
 
 SHELL ["/bin/ash", "-eo", "pipefail", "-c"]
 
+ARG OPENSIM_VERSION=0.9.3.0
+
 LABEL \
 	org.opencontainers.image.title="OpenSimulator (unofficial)" \
 	org.opencontainers.image.authors="code@soupbowl.io" \
 	org.opencontainers.image.source="https://github.com/soup-bowl/opensimulator-docker" \
-	org.opencontainers.image.licenses="MIT"
-
-ENV OPENSIM_VERSION=0.9.3.0
+	org.opencontainers.image.licenses="MIT" \
+	org.opencontainers.image.version="${OPENSIM_VERSION}"
 
 RUN apk add --no-cache curl dotnet8-runtime libgdiplus sqlite sqlite-libs uuidgen \
 	&& mkdir /opt/opensim-tmp \

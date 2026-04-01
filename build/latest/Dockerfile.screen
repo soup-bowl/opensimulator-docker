@@ -2,14 +2,15 @@ FROM mcr.microsoft.com/dotnet/runtime:8.0
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
+ARG OPENSIM_VERSION=0.9.3.0
+ARG OPENSIM_SHA1="a4bcd861626195af80cc1f962d3a2f4528859ad2"
+
 LABEL \
 	org.opencontainers.image.title="OpenSimulator (unofficial)" \
 	org.opencontainers.image.authors="code@soupbowl.io" \
 	org.opencontainers.image.source="https://github.com/soup-bowl/opensimulator-docker" \
-	org.opencontainers.image.licenses="MIT"
-
-ARG OPENSIM_VERSION=0.9.3.0
-ARG OPENSIM_SHA1="a4bcd861626195af80cc1f962d3a2f4528859ad2"
+	org.opencontainers.image.licenses="MIT" \
+	org.opencontainers.image.version="${OPENSIM_VERSION}"
 
 # hadolint ignore=DL3008
 RUN apt-get update \
