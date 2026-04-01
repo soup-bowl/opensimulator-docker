@@ -35,4 +35,4 @@ WORKDIR /opt/opensim/bin
 COPY docker-entrypoint.sh /usr/local/bin/
 
 ENTRYPOINT ["docker-entrypoint.sh"]
-CMD [ "dotnet",  "OpenSim.dll" ]
+CMD [ "screen", "-S", "OpenSim", "-D", "-m", "dotnet", "OpenSim.dll" ]

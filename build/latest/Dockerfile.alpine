@@ -10,7 +10,7 @@ LABEL \
 
 ENV OPENSIM_VERSION=0.9.3.0
 
-RUN apk add --no-cache curl dotnet8-runtime libgdiplus screen sqlite sqlite-libs uuidgen \
+RUN apk add --no-cache curl dotnet8-runtime libgdiplus sqlite sqlite-libs uuidgen \
 	&& mkdir /opt/opensim-tmp \
 	&& curl "http://opensimulator.org/dist/opensim-${OPENSIM_VERSION}.tar.gz"  | tar xzf - -C /opt/opensim-tmp \
 	&& rm /opt/opensim-tmp/opensim*/bin/OpenSim.ini \
@@ -28,4 +28,4 @@ WORKDIR /opt/opensim/bin
 COPY docker-entrypoint.sh /usr/local/bin/
 
 ENTRYPOINT ["docker-entrypoint.sh"]
-CMD [ "screen", "-S", "OpenSim", "-D", "-m", "dotnet",  "OpenSim.dll" ]
+CMD [ "dotnet", "OpenSim.dll", "-console=basic" ]

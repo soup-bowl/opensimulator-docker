@@ -61,12 +61,12 @@ jobs:
             sha1: a4bcd861626195af80cc1f962d3a2f4528859ad2
           - version: "0.9.3.0"
             tag: >
-              soupbowl/opensimulator:0.9.3-noscreen,
-              soupbowl/opensimulator:0.9.3.0-noscreen,
-              ghcr.io/${{ github.repository }}:0.9.3-noscreen,
-              ghcr.io/${{ github.repository }}:0.9.3.0-noscreen,
+              soupbowl/opensimulator:0.9.3-screen,
+              soupbowl/opensimulator:0.9.3.0-screen,
+              ghcr.io/${{ github.repository }}:0.9.3-screen,
+              ghcr.io/${{ github.repository }}:0.9.3.0-screen,
             folder: build/latest
-            file: Dockerfile.noscreen
+            file: Dockerfile.screen
             platforms: linux/amd64,linux/arm64
             sha1: a4bcd861626195af80cc1f962d3a2f4528859ad2
           - version: "0.9.3.0"

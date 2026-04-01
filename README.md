@@ -22,7 +22,7 @@ This **unofficial** Docker configuration aims to assist in setting the server up
 
 -	[`latest`, `0.9`, `0.9.3`, `0.9.3.0`](https://github.com/soup-bowl/opensimulator-docker/blob/main/build/latest/Dockerfile)
 
--	[`0.9.3-noscreen`, `0.9.3.0-noscreen`](https://github.com/soup-bowl/opensimulator-docker/blob/main/build/latest/Dockerfile.noscreen)
+-	[`0.9.3-screen`, `0.9.3.0-screen`](https://github.com/soup-bowl/opensimulator-docker/blob/main/build/latest/Dockerfile.screen)
 
 -	[`0.9.2`, `0.9.2.2`](https://github.com/soup-bowl/opensimulator-docker/blob/main/build/latest/Dockerfile.mono)
 
@@ -34,7 +34,8 @@ This **unofficial** Docker configuration aims to assist in setting the server up
 
 # Usage
 
-Versions 0.9.3.0 and above use .NET, and due to a bug under investigation ([see #9][I9]) the image uses `screen` to prevent the session from ending unexpectedly. Versions 0.9.2.2 and below use Mono. Please see Limitations for more information.
+> [!IMPORTANT]  
+> The dependency on `screen` for this image has been resolved (see [#9][I9]), so any further updates to the versioned images of 0.9.3.0 and above will no longer use screen. If you wish to continue with this version, switch your tag to `0.9.3.0-screen`, however ongoing support for this is **not guaranteed**.
 
 ```bash
 docker run -it -d --name opensim -p 9000:9000 -p 9000:9000/udp soupbowl/opensimulator:latest
@@ -58,6 +59,8 @@ Once the server is running, you should be able to connect to it on `localhost:90
 
 If you don't define otherwise in the environments or a custom configuration, the login username is **Foo bar** and the password is **password**.
 
+You can access the server administration command panel by running `docker attach <container name>`. You may need to run a command (e.g. `help`) to get the input to show up.
+
 ## Custom Configurations
 
 The environment list is not inclusive to the incredible range of options that OpenSimulator can be configured, and just covers a subset of the most popular settings. If you specify your own custom configuration file, it will be used instead of the image-generated configuration (you can define it as readonly (`:ro`) for assurance).
@@ -72,32 +75,11 @@ To aid the use of SQLite mode with persistent data, the default configuration ha
 
 (Note that if you use a custom `SQLiteStandalone.ini` file, this will not happen).
 
-```
-docker run -d --name opensim -p 9000:9000 -p 9000:9000/udp -v /path/on/your/system:/opt/opensim/bin/sqlite-database  soupbowl/opensimulator:latest
-```
-
-# Limitations
-
-## Running Server Admin Commands
-
-At current, there doesn't appear to be an implemented and/or documented approach to managing the server from _outside_ the active TTY, and running `docker attach opensim` seems to produce a blank prompt. You can `exec` into the container or edit the bound configuration script and restart the server to make changes, but in some server instances you might need to intercept the prompt.
-
-This Docker image comes with `screen` built in, to allow you to access the administration prompt. This also seems to help prevent against Docker from accidentally destroying the image (currently investigating). As a result this leaves the Docker log unfortunately blank, but you can access the logfile at `/opt/opensim/bin/OpenSim.log`.
-
-You can access a controllable OpenSimulator administration prompt by running:
-
-```
-docker exec -it <container name> screen -r -d OpenSim
+```bash
+docker run -it -d --name opensim -p 9000:9000 -p 9000:9000/udp -v /path/on/your/system:/opt/opensim/bin/sqlite-database  soupbowl/opensimulator:latest
 ```
 
-You can leave the screen session by pressing `ctrl + a` then `d`.
-
-If you wish to run **without**, you can modify the Dockerfile like so:
-
-```dockerfile
-FROM soupbowl/opensimulator:latest
-CMD [ "dotnet",  "OpenSim.dll" ]
-```
+# Limitations and Troubleshooting
 
 ## Physics in ARM
 
@@ -114,6 +96,10 @@ Alternatively, a suitable drop-in library in `lib64/libBulletSim-aarch64.so` for
 
 **I'm keen to support ARM architecture to the bounds of OpenSimulator. If you have any experience on this, please reach out to me.**
 
+## `Command error: System.NullReferenceException: Object reference not set to an instance of an object.`
+
+This occurs because the terminal is expecting a method of input, but isn't able to detect one. This is why the command requires `-it`, and the compose needs `tty` and `stdin_open`.
+
 # Examples
 
 See [this repository](https://github.com/soup-bowl/opensim-sandbox) for some example usages of this image.
@@ -128,9 +114,19 @@ The latest OpenSimulator image build using [official .NET 8 image](https://mcr.m
 
 If you pull from **0.9.2.2** or below, you will instead be using the [Mono Framework](https://hub.docker.com/_/mono/).
 
-## `soupbowl/opensimulator:<version>-noscreen`
+## `soupbowl/opensimulator:<version>-screen`
 
-Starting from **0.9.3.0**, until [#9 is resolved](https://github.com/soup-bowl/opensimulator-docker/issues/9), there is a build of the Dotnet editions without screen. This is **temporary** and will be removed once a solution is found, so there is no latest tag to avoid dependency. All feedback on experience is welcome on [issue #9][I9].
+Reported in [issue #9][I9] and starting with OpenSimulator version **0.9.3.0**, there was a bug that would cause the OpenSimulator server to unexpectedly shut down, seemingly from a phantom kill input. `screen` was used (and used previously to access the server) to send inputs to the server.
+
+The mainline images are now using `-console=basic`, which strips away some of the fancy features in exchange for compatibility with the Docker session. `screen` is no longer required, and session management can be achieved via `docker attach`.
+
+To aid a transition to this approach, this version is provided that continues to use screen. In this mode, regular server mode is retained, and you access server controls via:
+
+```
+docker exec -it <container name> screen -r -d OpenSim
+```
+
+You can leave the screen session by pressing `ctrl + a` then `d`. Please note that in this variant, no logs are output as they are captured in the screen session.
 
 ## `soupbowl/opensimulator:alpine-beta`
 
