@@ -10,8 +10,8 @@ WORKDIR /app
 RUN rm -rf .git && \
 	./runprebuild.sh && \
 	./compile.sh && \
-    find . -name "*.pdb" -delete && \
-	rm -r *prebuild* compile.sh ThirdParty TESTING.txt Prebuild OpenSim* Makefile BUILDING.md && \
+	find . -name "*.pdb" -delete && \
+	rm -r -- *prebuild* compile.sh ThirdParty TESTING.txt Prebuild OpenSim* Makefile BUILDING.md && \
 	rm bin/config-include/storage/SQLiteStandalone.ini
 COPY defaults  bin/defaults
 
