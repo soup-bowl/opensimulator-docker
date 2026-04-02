@@ -1,3 +1,23 @@
+FROM soupbowl/wine-mono:6 AS build
+ENV DEBIAN_FRONTEND=noninteractive
+
+ARG OPENSIM_VERSION=0.9.2.2
+
+RUN apt-get update \
+	&& apt-get install --no-install-recommends -y \
+		git \
+	&& apt-get clean \
+	&& rm -rf /var/lib/apt/lists/*
+
+RUN git clone --depth 1 --branch "${OPENSIM_VERSION}" git://opensimulator.org/git/opensim /app
+WORKDIR /app
+RUN rm -rf .git && \
+	./runprebuild.sh && \
+	xbuild && \
+	rm -r -- *prebuild* ThirdParty TESTING.txt Prebuild OpenSim* Makefile BUILDING.md && \
+	rm bin/config-include/storage/SQLiteStandalone.ini
+COPY defaults  bin/defaults
+
 FROM soupbowl/wine-mono:6
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -15,21 +35,11 @@ LABEL \
 
 RUN apt-get update \
 	&& apt-get install --no-install-recommends -y \
-		ca-certificates curl screen uuid-runtime libglib2.0-0 libgnutls30 tzdata libgdiplus libfontconfig1 \
+		ca-certificates curl uuid-runtime libglib2.0-0 libgnutls30 libsqlite3-dev tzdata libgdiplus libfontconfig1 \
 	&& apt-get clean \
-	&& rm -rf /var/lib/apt/lists/* \
-	&& mkdir /opt/opensim-tmp \
-	&& curl -o /opt/opensim-tmp/opensim.tar.gz "http://opensimulator.org/dist/opensim-${OPENSIM_VERSION}.tar.gz" \
-	&& echo "${OPENSIM_SHA1}  /opt/opensim-tmp/opensim.tar.gz" | sha1sum -c - \
-	&& tar xzf /opt/opensim-tmp/opensim.tar.gz -C /opt/opensim-tmp \
-	&& rm /opt/opensim-tmp/opensim*/bin/OpenSim.ini \
-	&& rm /opt/opensim-tmp/opensim*/bin/config-include/StandaloneCommon.ini \
-	&& rm /opt/opensim-tmp/opensim*/bin/config-include/storage/SQLiteStandalone.ini \
-	&& mkdir /opt/opensim \
-	&& mv /opt/opensim-tmp/opensim*/* /opt/opensim \
-	&& rm -rf /opt/opensim-tmp
+	&& rm -rf /var/lib/apt/lists/*
 
-COPY defaults  /opt/opensim/bin/defaults
+COPY --from=build /app /opt/opensim
 
 EXPOSE 9000
 
@@ -38,4 +48,4 @@ WORKDIR /opt/opensim/bin
 COPY docker-entrypoint.sh /usr/local/bin/
 
 ENTRYPOINT ["docker-entrypoint.sh"]
-CMD [ "mono", "./OpenSim.exe" ]
+CMD [ "mono", "./OpenSim.exe", "-console=basic" ]

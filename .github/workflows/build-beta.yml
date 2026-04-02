@@ -25,7 +25,7 @@ jobs:
           - version: master
             tag: source
             folder: build/latest
-            file: Dockerfile.source
+            file: Dockerfile
             platforms: linux/amd64
 
     steps:
