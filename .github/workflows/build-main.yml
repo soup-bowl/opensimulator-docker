@@ -105,6 +105,5 @@ jobs:
           file: "${{ matrix.file }}"
           build-args: |
             OPENSIM_VERSION=${{ matrix.version }}
-            OPENSIM_SHA1=${{ matrix.sha1 }}
           cache-from: type=gha
           cache-to: type=gha,mode=max

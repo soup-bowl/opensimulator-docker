@@ -28,7 +28,7 @@ LABEL \
 
 # hadolint ignore=DL3008
 RUN apt-get update && \
-	apt-get install --no-install-recommends -y libc6-dev libgdiplus libsqlite3-dev uuid-runtime && \
+	apt-get install --no-install-recommends -y libc6-dev libgdiplus libsqlite3-0 uuid-runtime && \
 	apt-get clean && \
 	rm -rf /var/lib/apt/lists/*
 

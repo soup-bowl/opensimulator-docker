@@ -35,7 +35,7 @@ LABEL \
 
 RUN apt-get update \
 	&& apt-get install --no-install-recommends -y \
-		ca-certificates curl uuid-runtime libglib2.0-0 libgnutls30 libsqlite3-dev tzdata libgdiplus libfontconfig1 \
+		ca-certificates uuid-runtime libglib2.0-0 libgnutls30 libsqlite3-0 tzdata libgdiplus libfontconfig1 \
 	&& apt-get clean \
 	&& rm -rf /var/lib/apt/lists/*
 

@@ -28,7 +28,7 @@ LABEL \
 	org.opencontainers.image.licenses="MIT" \
 	org.opencontainers.image.version="${OPENSIM_VERSION}"
 
-RUN apk add --no-cache curl dotnet8-runtime libgdiplus sqlite sqlite-libs uuidgen
+RUN apk add --no-cache dotnet8-runtime libgdiplus sqlite sqlite-libs uuidgen
 
 COPY --from=build /app /opt/opensim
 
