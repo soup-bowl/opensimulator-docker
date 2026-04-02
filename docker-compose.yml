@@ -15,7 +15,7 @@ services:
     container_name: opensim
     build:
       context: ./build/latest
-      dockerfile: Dockerfile.source
+      dockerfile: Dockerfile
       args:
         - OPENSIM_VERSION=master
     depends_on:

@@ -1,32 +1,38 @@
-FROM mcr.microsoft.com/dotnet/runtime:8.0
+ARG DOTNET_VERSION=8.0
+FROM mcr.microsoft.com/dotnet/sdk:${DOTNET_VERSION} AS build
 
-SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+ARG OPENSIM_VERSION=0.9.3.0
+
+# Cache Bust to avoid caching skipping the latest commit
+ADD https://api.github.com/repos/opensim/opensim/git/refs/heads/${OPENSIM_VERSION} version.json
+RUN git clone --depth 1 --branch "${OPENSIM_VERSION}" https://github.com/opensim/opensim.git /app
+WORKDIR /app
+RUN rm -rf .git && \
+	./runprebuild.sh && \
+	./compile.sh && \
+	find . -name "*.pdb" -delete && \
+	rm -r -- *prebuild* compile.sh ThirdParty TESTING.txt Prebuild OpenSim* Makefile BUILDING.md && \
+	rm bin/config-include/storage/SQLiteStandalone.ini
+COPY defaults  bin/defaults
+
+FROM mcr.microsoft.com/dotnet/runtime:${DOTNET_VERSION}
+
+ARG OPENSIM_VERSION=0.9.3.0
 
 LABEL \
 	org.opencontainers.image.title="OpenSimulator (unofficial)" \
 	org.opencontainers.image.authors="code@soupbowl.io" \
 	org.opencontainers.image.source="https://github.com/soup-bowl/opensimulator-docker" \
-	org.opencontainers.image.licenses="MIT"
-
-ARG OPENSIM_VERSION=0.9.3.0
-ARG OPENSIM_SHA1="a4bcd861626195af80cc1f962d3a2f4528859ad2"
+	org.opencontainers.image.licenses="MIT" \
+	org.opencontainers.image.version="${OPENSIM_VERSION}"
 
 # hadolint ignore=DL3008
-RUN apt-get update \
-	&& apt-get install --no-install-recommends -y apt-utils curl libc6-dev libgdiplus libsqlite3-dev uuid-runtime \
-	&& apt-get clean \
-	&& rm -rf /var/lib/apt/lists/* \
-	&& mkdir /opt/opensim-tmp \
-	&& curl -o /opt/opensim-tmp/opensim.tar.gz "http://opensimulator.org/dist/opensim-${OPENSIM_VERSION}.tar.gz" \
-	&& echo "${OPENSIM_SHA1}  /opt/opensim-tmp/opensim.tar.gz" | sha1sum -c - \
-	&& tar xzf /opt/opensim-tmp/opensim.tar.gz -C /opt/opensim-tmp \
-	&& rm /opt/opensim-tmp/opensim*/bin/OpenSim.ini \
-	&& rm /opt/opensim-tmp/opensim*/bin/config-include/StandaloneCommon.ini \
-	&& rm /opt/opensim-tmp/opensim*/bin/config-include/storage/SQLiteStandalone.ini \
-	&& mkdir /opt/opensim \
-	&& mv /opt/opensim-tmp/opensim*/* /opt/opensim
+RUN apt-get update && \
+	apt-get install --no-install-recommends -y libc6-dev libgdiplus libsqlite3-0 uuid-runtime && \
+	apt-get clean && \
+	rm -rf /var/lib/apt/lists/*
 
-COPY defaults  /opt/opensim/bin/defaults
+COPY --from=build /app /opt/opensim
 
 EXPOSE 9000
 
