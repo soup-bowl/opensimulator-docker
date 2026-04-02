@@ -15,7 +15,7 @@ RUN rm -rf .git && \
 	rm bin/config-include/storage/SQLiteStandalone.ini
 COPY defaults  bin/defaults
 
-FROM alpine:3.21
+FROM alpine:3.21 AS prepare
 
 SHELL ["/bin/ash", "-eo", "pipefail", "-c"]
 
@@ -37,6 +37,8 @@ EXPOSE 9000
 WORKDIR /opt/opensim/bin
 
 COPY docker-entrypoint.sh /usr/local/bin/
+
+FROM prepare AS final
 
 ENTRYPOINT ["docker-entrypoint.sh"]
 CMD [ "dotnet", "OpenSim.dll", "-console=basic" ]

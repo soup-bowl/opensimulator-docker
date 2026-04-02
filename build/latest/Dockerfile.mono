@@ -18,7 +18,7 @@ RUN rm -rf .git && \
 	rm bin/config-include/storage/SQLiteStandalone.ini
 COPY defaults  bin/defaults
 
-FROM soupbowl/wine-mono:6
+FROM soupbowl/wine-mono:6 AS prepare
 ENV DEBIAN_FRONTEND=noninteractive
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
@@ -46,6 +46,8 @@ EXPOSE 9000
 WORKDIR /opt/opensim/bin
 
 COPY docker-entrypoint.sh /usr/local/bin/
+
+FROM prepare AS final
 
 ENTRYPOINT ["docker-entrypoint.sh"]
 CMD [ "mono", "./OpenSim.exe", "-console=basic" ]

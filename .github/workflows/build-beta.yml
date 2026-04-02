@@ -27,6 +27,7 @@ jobs:
             folder: build/latest
             file: Dockerfile
             platforms: linux/amd64
+            target: final
 
     steps:
       - name: Checkout Codebase

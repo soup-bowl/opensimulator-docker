@@ -15,7 +15,7 @@ RUN rm -rf .git && \
 	rm bin/config-include/storage/SQLiteStandalone.ini
 COPY defaults  bin/defaults
 
-FROM mcr.microsoft.com/dotnet/runtime:${DOTNET_VERSION}
+FROM mcr.microsoft.com/dotnet/runtime:${DOTNET_VERSION} AS prepare
 
 ARG OPENSIM_VERSION=0.9.3.0
 
@@ -39,6 +39,18 @@ EXPOSE 9000
 WORKDIR /opt/opensim/bin
 
 COPY docker-entrypoint.sh /usr/local/bin/
+
+FROM prepare AS final-screen
+
+RUN apt-get update && \
+	apt-get install --no-install-recommends -y screen && \
+	apt-get clean && \
+	rm -rf /var/lib/apt/lists/*
+
+ENTRYPOINT ["docker-entrypoint.sh"]
+CMD [ "screen", "-S", "OpenSim", "-D", "-m", "dotnet", "OpenSim.dll" ]
+
+FROM prepare AS final
 
 ENTRYPOINT ["docker-entrypoint.sh"]
 CMD [ "dotnet", "OpenSim.dll", "-console=basic" ]

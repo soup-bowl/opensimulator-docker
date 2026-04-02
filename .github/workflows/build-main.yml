@@ -26,6 +26,7 @@ jobs:
             folder: build/latest
             file: Dockerfile.mono
             platforms: linux/amd64,linux/arm64
+            target: final
           - version: "0.9.2.1"
             tag: >
               soupbowl/opensimulator:0.9.2.1,
@@ -33,6 +34,7 @@ jobs:
             folder: build/latest
             file: Dockerfile.mono
             platforms: linux/amd64,linux/arm64
+            target: final
           - version: "0.9.2.2"
             tag: >
               soupbowl/opensimulator:0.9.2,
@@ -42,6 +44,7 @@ jobs:
             folder: build/latest
             file: Dockerfile.mono
             platforms: linux/amd64,linux/arm64
+            target: final
           - version: "0.9.3.0"
             tag: >
               soupbowl/opensimulator:latest,
@@ -55,6 +58,7 @@ jobs:
             folder: build/latest
             file: Dockerfile
             platforms: linux/amd64,linux/arm64
+            target: final
           - version: "0.9.3.0"
             tag: >
               soupbowl/opensimulator:0.9.3-screen,
@@ -64,12 +68,14 @@ jobs:
             folder: build/latest
             file: Dockerfile.screen
             platforms: linux/amd64,linux/arm64
+            target: final-screen
           - version: "0.9.3.0"
             tag: >
               ghcr.io/${{ github.repository }}:alpine-beta
             folder: build/latest
             file: Dockerfile.alpine
             platforms: linux/amd64,linux/arm64
+            target: final
 
     steps:
       - name: Checkout Codebase
@@ -103,6 +109,7 @@ jobs:
           tags: ${{ matrix.tag }}
           platforms: ${{ matrix.platforms }}
           file: "${{ matrix.file }}"
+          target: "${{ matrix.target }}"
           build-args: |
             OPENSIM_VERSION=${{ matrix.version }}
           cache-from: type=gha
