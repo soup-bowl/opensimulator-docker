@@ -55,7 +55,40 @@ jobs:
         id: buildx
         uses: docker/setup-buildx-action@v4
 
-      - name: Build Container
+      - name: Build for test
+        if: ${{ !matrix.skip-test }}
+        uses: docker/build-push-action@v7
+        with:
+          push: false
+          load: true
+          context: "{{defaultContext}}:${{ matrix.folder }}"
+          file: "${{ matrix.file }}"
+          tags: opensimulator-ci:${{ github.run_id }}
+          build-args: |
+            OPENSIM_VERSION=${{ matrix.version }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Cache CST
+        if: ${{ !matrix.skip-test }}
+        id: cache-cst
+        uses: actions/cache@v4
+        with:
+          path: ./container-structure-test
+          key: container-structure-test-linux-amd64
+
+      - name: Download CST
+        if: ${{ !matrix.skip-test && steps.cache-cst.outputs.cache-hit != 'true' }}
+        run: |
+          curl -fsSL -o container-structure-test https://storage.googleapis.com/container-structure-test/latest/container-structure-test-linux-amd64
+          chmod +x container-structure-test
+
+      - name: Run CST
+        if: ${{ !matrix.skip-test }}
+        run: |
+          ./container-structure-test test --image opensimulator-ci:${{ github.run_id }} --config unit-test.yaml
+
+      - name: Push Container
         #if: github.event_name != 'schedule' || matrix.tag == 'source'
         uses: docker/build-push-action@v7
         with:
