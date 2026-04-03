@@ -1,11 +1,13 @@
-name: Build Experimental Images
+name: Build Source Images
 
 on:
   push:
     branches:
       - main
     paths:
-      - "beta/**"
+      - "build/latest/Dockerfile*"
+      - "build/latest/defaults/**"
+      - "build/latest/docker-entrypoint.sh"
   repository_dispatch:
     # Triggered by a NR script inspecting changes to the 'master' branch of OpenSimulator.
     types: [srcbuild]
