@@ -1,4 +1,5 @@
 <h1 align="center">OpenSimulator</h1>
+<p align="center"><strong>Unofficial</strong></p>
 
 <p align="center">
   <a href="https://github.com/soup-bowl/opensimulator-docker/actions/workflows/build-main.yml"><img src="https://img.shields.io/github/actions/workflow/status/soup-bowl/opensimulator-docker/build-main.yml?style=plastic" alt="GitHub Workflow Status" /></a>
