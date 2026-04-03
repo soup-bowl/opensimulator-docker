@@ -5,7 +5,9 @@ on:
     branches:
       - main
     paths:
-      - "build/**"
+      - "build/latest/Dockerfile*"
+      - "build/latest/defaults/**"
+      - "build/latest/docker-entrypoint.sh"
   workflow_dispatch:
 
 permissions:
