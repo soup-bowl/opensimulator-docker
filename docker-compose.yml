@@ -14,7 +14,7 @@ services:
   metaverse:
     container_name: opensim
     build:
-      context: ./build/latest
+      context: ./image
       dockerfile: Dockerfile
       args:
         - OPENSIM_VERSION=master

@@ -1,0 +1,51 @@
+{
+	"registries": [
+		"soupbowl/opensimulator",
+		"ghcr.io/soup-bowl/opensimulator-docker"
+	],
+	"variants": {
+		"dotnet": {
+			"dockerfile": "Dockerfile",
+			"target": "final",
+			"platforms": ["linux/amd64", "linux/arm64"]
+		},
+		"screen": {
+			"suffix": "screen",
+			"dockerfile": "Dockerfile",
+			"target": "final-screen",
+			"platforms": ["linux/amd64", "linux/arm64"],
+			"test": false
+		},
+		"alpine-beta": {
+			"suffix": "alpine-beta",
+			"dockerfile": "Dockerfile.alpine",
+			"target": "final",
+			"platforms": ["linux/amd64", "linux/arm64"]
+		},
+		"mono": {
+			"dockerfile": "Dockerfile.mono",
+			"target": "final",
+			"platforms": ["linux/amd64", "linux/arm64"]
+		}
+	},
+	"versions": {
+		"0.9.3.0": {
+			"variants": ["dotnet", "screen", "alpine-beta"]
+		},
+		"0.9.2.2": {
+			"variants": ["mono"]
+		},
+		"0.9.2.1": {
+			"variants": ["mono"]
+		},
+		"0.9.2.0": {
+			"variants": ["mono"]
+		}
+	},
+	"source": {
+		"tag": "source",
+		"ref": "master",
+		"variant": "dotnet",
+		"platforms": ["linux/amd64"]
+	}
+}
