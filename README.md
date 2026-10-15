@@ -2,7 +2,7 @@
 <p align="center"><strong>Unofficial</strong></p>
 
 <p align="center">
-  <a href="https://github.com/soup-bowl/opensimulator-docker/actions/workflows/build-main.yml"><img src="https://img.shields.io/github/actions/workflow/status/soup-bowl/opensimulator-docker/build-main.yml?style=plastic" alt="GitHub Workflow Status" /></a>
+  <a href="https://github.com/soup-bowl/opensimulator-docker/actions/workflows/build.yml"><img src="https://img.shields.io/github/actions/workflow/status/soup-bowl/opensimulator-docker/build-main.yml?style=plastic" alt="GitHub Workflow Status" /></a>
   <a href="https://hub.docker.com/r/soupbowl/opensimulator"><img src="https://img.shields.io/docker/image-size/soupbowl/opensimulator/latest?logo=docker&logoColor=white&style=plastic" alt="Docker Image Size (tag)" /></a>
   <a href="https://hub.docker.com/r/soupbowl/opensimulator"><img src="https://img.shields.io/docker/pulls/soupbowl/opensimulator?logo=docker&logoColor=white&style=plastic" alt="Docker Pulls" /></a>
 </p>
@@ -21,17 +21,23 @@ This **unofficial** Docker configuration aims to assist in setting the server up
 
 # Supported tags and respective `Dockerfile` links
 
--	[`latest`, `0.9`, `0.9.3`, `0.9.3.0`](https://github.com/soup-bowl/opensimulator-docker/blob/main/build/latest/Dockerfile)
+<!-- tags:start -->
 
--	[`0.9.3-screen`, `0.9.3.0-screen`](https://github.com/soup-bowl/opensimulator-docker/blob/main/build/latest/Dockerfile.screen)
+-	[`0.9.3.0`, `0.9.3`, `0.9`, `latest`](https://github.com/soup-bowl/opensimulator-docker/blob/main/image/Dockerfile)
 
--	[`0.9.2`, `0.9.2.2`](https://github.com/soup-bowl/opensimulator-docker/blob/main/build/latest/Dockerfile.mono)
+-	[`0.9.3.0-screen`, `0.9.3-screen`, `0.9-screen`, `screen`](https://github.com/soup-bowl/opensimulator-docker/blob/main/image/Dockerfile)
 
--	[`0.9.2.1`](https://github.com/soup-bowl/opensimulator-docker/blob/main/build/latest/Dockerfile.mono)
+-	[`0.9.3.0-alpine-beta`, `0.9.3-alpine-beta`, `0.9-alpine-beta`, `alpine-beta`](https://github.com/soup-bowl/opensimulator-docker/blob/main/image/Dockerfile.alpine)
 
--	[`source`](https://github.com/soup-bowl/opensimulator-docker/blob/main/beta/source/Dockerfile)
+-	[`0.9.2.2`, `0.9.2`](https://github.com/soup-bowl/opensimulator-docker/blob/main/image/Dockerfile.mono)
 
--	[`alpine-beta`](https://github.com/soup-bowl/opensimulator-docker/blob/main/beta/alpine/Dockerfile)
+-	[`0.9.2.1`](https://github.com/soup-bowl/opensimulator-docker/blob/main/image/Dockerfile.mono)
+
+-	[`0.9.2.0`](https://github.com/soup-bowl/opensimulator-docker/blob/main/image/Dockerfile.mono)
+
+-	[`source`](https://github.com/soup-bowl/opensimulator-docker/blob/main/image/Dockerfile)
+
+<!-- tags:end -->
 
 # Usage
 
@@ -142,6 +148,30 @@ Gets the latest available code from the OpenSimulator repository, and constructs
 # Source Code
 
 The source code of the Docker image is [found on the GitHub repository][src]. You can find the [OpenSimulator server software source code on their website](http://opensimulator.org/wiki/Developer_Documentation#Source_Code_Repository_Access).
+
+## Releasing a new version
+
+Every published image is described in [`versions.json`](versions.json), similar to how the [Docker Library](https://github.com/docker-library) images are maintained. To publish a new OpenSimulator release, add it to the `versions` object with the variants it should be built as:
+
+```json
+"versions": {
+	"0.9.3.1": {
+		"variants": ["dotnet", "screen"]
+	},
+	...
+}
+```
+
+Floating tags (`latest`, `0.9`, `0.9.3`, `screen`...) are calculated automatically from the version numbers, so they move to the newest release on their own. Variants (the Dockerfile, build target, tag suffix and platforms) are defined once in the `variants` object.
+
+Then refresh the tag list in this README and commit both files:
+
+```bash
+./generate.sh readme          # update "Supported tags" above
+./generate.sh matrix | jq .   # preview what CI will build and push
+```
+
+Merging into `main` builds and pushes everything listed. The `source` image is also rebuilt on demand via a `srcbuild` repository dispatch.
 
 [src]: https://github.com/soup-bowl/opensimulator-docker
 [os]: http://opensimulator.org/wiki/Main_Page

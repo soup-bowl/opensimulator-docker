@@ -1,41 +1,70 @@
-name: Build Source Images
+name: Build Images
 
 on:
   push:
     branches:
       - main
     paths:
-      - "build/latest/Dockerfile*"
-      - "build/latest/defaults/**"
-      - "build/latest/docker-entrypoint.sh"
+      - "image/**"
+      - "versions.json"
+      - "generate.sh"
+      - "unit-test.yaml"
+      - ".github/workflows/build.yml"
+  pull_request:
+    paths:
+      - "image/**"
+      - "versions.json"
+      - "generate.sh"
+      - "unit-test.yaml"
+      - ".github/workflows/build.yml"
   repository_dispatch:
     # Triggered by a NR script inspecting changes to the 'master' branch of OpenSimulator.
     types: [srcbuild]
   workflow_dispatch:
+    inputs:
+      scope:
+        description: "Which images to build"
+        type: choice
+        options: [all, releases, source]
+        default: all
 
 permissions:
   contents: read
   packages: write
 
 jobs:
+  generate:
+    name: Generate matrix
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.matrix.outputs.matrix }}
+    steps:
+      - name: Checkout Codebase
+        uses: actions/checkout@v6
+
+      - name: Generate build matrix from versions.json
+        id: matrix
+        env:
+          SCOPE: ${{ github.event_name == 'repository_dispatch' && 'source' || inputs.scope || 'all' }}
+        run: |
+          matrix="$(./generate.sh matrix "$SCOPE")"
+          jq . <<<"$matrix"
+          echo "matrix=$matrix" >> "$GITHUB_OUTPUT"
+
   build:
+    name: ${{ matrix.name }}
+    needs: generate
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
-      matrix:
-        include:
-          - version: master
-            tag: source
-            folder: build/latest
-            file: Dockerfile
-            platforms: linux/amd64
-            target: final
+      matrix: ${{ fromJSON(needs.generate.outputs.matrix) }}
 
     steps:
       - name: Checkout Codebase
         uses: actions/checkout@v6
 
       - name: Login to GitHub CR
+        if: github.event_name != 'pull_request'
         uses: docker/login-action@v4
         with:
           registry: ghcr.io
@@ -43,6 +72,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Login to Docker Hub
+        if: github.event_name != 'pull_request'
         uses: docker/login-action@v4
         with:
           username: ${{ secrets.DOCKER_USER }}
@@ -52,25 +82,25 @@ jobs:
         uses: docker/setup-qemu-action@v4
 
       - name: Set up Docker Buildx
-        id: buildx
         uses: docker/setup-buildx-action@v4
 
-      - name: Build for test
-        if: ${{ !matrix.skip-test }}
+      - name: Build for test (amd64)
         uses: docker/build-push-action@v7
         with:
           push: false
           load: true
-          context: "{{defaultContext}}:${{ matrix.folder }}"
-          file: "${{ matrix.file }}"
+          context: ${{ matrix.context }}
+          file: ${{ matrix.context }}/${{ matrix.dockerfile }}
+          target: ${{ matrix.target }}
           tags: opensimulator-ci:${{ github.run_id }}
+          platforms: linux/amd64
           build-args: |
             OPENSIM_VERSION=${{ matrix.version }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
       - name: Cache CST
-        if: ${{ !matrix.skip-test }}
+        if: matrix.test
         id: cache-cst
         uses: actions/cache@v4
         with:
@@ -78,27 +108,26 @@ jobs:
           key: container-structure-test-linux-amd64
 
       - name: Download CST
-        if: ${{ !matrix.skip-test && steps.cache-cst.outputs.cache-hit != 'true' }}
+        if: matrix.test && steps.cache-cst.outputs.cache-hit != 'true'
         run: |
           curl -fsSL -o container-structure-test https://storage.googleapis.com/container-structure-test/latest/container-structure-test-linux-amd64
           chmod +x container-structure-test
 
       - name: Run CST
-        if: ${{ !matrix.skip-test }}
+        if: matrix.test
         run: |
           ./container-structure-test test --image opensimulator-ci:${{ github.run_id }} --config unit-test.yaml
 
-      - name: Push Container
-        #if: github.event_name != 'schedule' || matrix.tag == 'source'
+      - name: Build and Push Container
+        if: github.event_name != 'pull_request'
         uses: docker/build-push-action@v7
         with:
           push: true
-          context: "{{defaultContext}}:${{ matrix.folder }}"
-          tags: >
-            soupbowl/opensimulator:${{ matrix.tag }},
-            ghcr.io/${{ github.repository }}:${{ matrix.tag }},
+          context: ${{ matrix.context }}
+          file: ${{ matrix.context }}/${{ matrix.dockerfile }}
+          target: ${{ matrix.target }}
+          tags: ${{ matrix.tags }}
           platforms: ${{ matrix.platforms }}
-          file: "${{ matrix.file }}"
           build-args: |
             OPENSIM_VERSION=${{ matrix.version }}
           cache-from: type=gha
